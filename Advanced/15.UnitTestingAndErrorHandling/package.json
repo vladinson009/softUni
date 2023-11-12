@@ -1,0 +1,16 @@
+{
+  "name": "Advanced",
+  "version": "1.0.0",
+  "description": "",
+  "main": "06rgbToHex.js",
+  "scripts": {
+    "test": "mocha 06rgbToHex.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.3.10",
+    "mocha": "^10.2.0"
+  }
+}
