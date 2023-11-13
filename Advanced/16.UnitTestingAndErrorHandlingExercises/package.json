@@ -1,10 +1,10 @@
 {
-  "name": "Advanced",
+  "name": "16.UnitTestingAndErrorHandlingExercises",
   "version": "1.0.0",
   "description": "",
-  "main": "06rgbToHex.js",
+  "main": "index.js",
   "scripts": {
-    "test": "mocha 07addSubtract.test.js"
+    "test": "mocha test"
   },
   "keywords": [],
   "author": "",
