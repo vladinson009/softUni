@@ -53,4 +53,3 @@ console.log(c.addEmployee("Stanimir", 1200, "digital marketing manager", "Market
 console.log(c.addEmployee("Pesho", 1000, "graphical designer", "Marketing"));
 console.log(c.addEmployee("Gosho", 1350, "HR", "Human resources"));
 console.log(c.bestDepartment());
-module.export = Company;
