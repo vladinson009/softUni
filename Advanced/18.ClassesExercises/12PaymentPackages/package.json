@@ -1,0 +1,17 @@
+{
+  "name": "Advanced",
+  "version": "1.0.0",
+  "description": "",
+  "main": "12paymentPackages.js",
+  "scripts": {
+    "test": "mocha 12paymentPackages.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^5.1.0",
+    "mocha": "^10.4.0"
+  }
+  
+}
