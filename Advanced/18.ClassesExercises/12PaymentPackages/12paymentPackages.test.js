@@ -1,161 +1,125 @@
-const { expect } = require("chai");
-const { PaymentPackage } = require("./12paymentPackages.js");
+import { PaymentPackage } from './12paymentPackages.js';
+import { expect } from 'chai';
 
-describe("test for PaymentPackage", () => {
+describe('tests for class PaymentPackage', () => {
   let instance;
-  beforeEach(() => {
-    instance = new PaymentPackage("Test", 100);
-  });
+  beforeEach(() => (instance = new PaymentPackage('Test', 100)));
 
-  describe("check for correct instance", () => {
-    it("should be correct name", () => {
-      expect(instance._name).to.equal("Test");
-      expect(typeof instance._name).to.equal("string");
-    });
-    it("should be correct value", () => {
-      expect(instance._value).to.equal(100);
-      expect(typeof instance._value).to.equal("number");
-    });
-    it("should be correct VAT", () => {
-      expect(instance._VAT).to.equal(20);
-      expect(typeof instance._VAT).to.equal("number");
-    });
-    it("should be correct active status", () => {
-      expect(instance._active).to.equal(true);
-      expect(instance._active).to.be.a("boolean");
-      expect(typeof instance._active).to.be.equal("boolean");
-    });
-    it('should return correct string representation with "(inactive)" label if package is inactive', function () {
-      instance.active = false;
-      expect(instance.toString()).to.equal(
-        "Package: Test (inactive)\n- Value (excl. VAT): 100\n- Value (VAT 20%): 120"
-      );
-    });
-    it("active true", () => {
-      instance.active = true;
-      expect(instance.toString()).to.equal(
-        "Package: Test\n- Value (excl. VAT): 100\n- Value (VAT 20%): 120"
-      );
-    });
+  it('test0.1', () => {
+    const output = [
+      `Package: ${instance.name}` +
+        (instance.active === false ? ' (inactive)' : ''),
+      `- Value (excl. VAT): ${instance.value}`,
+      `- Value (VAT ${instance.VAT}%): ${
+        instance.value * (1 + instance.VAT / 100)
+      }`,
+    ];
+    let str = output.join('\n');
+    expect(instance.name).to.equal('Test');
+    expect(instance.value).to.equal(100);
+    expect(instance.active).to.equal(true);
+    expect(instance.VAT).to.equal(20);
+    expect(instance.toString()).to.equal(str);
   });
+  it('test1', () => {
+    instance.name = 'Demo';
+    expect(instance.name).to.equal('Demo');
+  });
+  it('test1.1', () => {
+    expect(() => new PaymentPackage('Demo', 11)).not.to.throw();
+  });
+  it('test1.2', () => {
+    expect(() => new PaymentPackage('12', 0)).not.to.throw();
+  });
+  it('test1.3', () => {
+    instance.VAT = 10;
+    instance.name = 'Value';
+    instance.value = 123;
+    instance.active = true;
 
-  describe("check parameters", () => {
-    it("check for name", () => {
-      expect(new PaymentPackage(100, 100)).to.throw(
-        Error("Name must be a non-empty string")
-      );
-      expect(new PaymentPackage("", 100)).to.throw(
-        Error("Name must be a non-empty string")
-      );
-      expect(new PaymentPackage([], 100)).to.throw(
-        Error("Name must be a non-empty string")
-      );
-      expect(new PaymentPackage(null, 100)).to.throw(
-        Error("Name must be a non-empty string")
-      );
-      expect(new PaymentPackage("Test", 100)).not.to.throw(
-        "Name must be a non-empty string"
-      );
-    });
-
-    it("check for value", () => {
-      expect(new PaymentPackage("Test", "Test")).to.throw(
-        Error("Value must be a non-negative number")
-      );
-      expect(new PaymentPackage("Test", -1)).to.throw(
-        Error("Value must be a non-negative number")
-      );
-      expect(new PaymentPackage("Test", [])).to.throw(
-        Error("Value must be a non-negative number")
-      );
-      expect(new PaymentPackage("Test", null)).to.throw(
-        Error("Value must be a non-negative number")
-      );
-      expect(new PaymentPackage("Test")).to.throw(
-        Error("Value must be a non-negative number")
-      );
-      expect(new PaymentPackage("Test", "")).to.throw(
-        Error("Value must be a non-negative number")
-      );
-      expect((instance._value = 0)).not.to.throw();
-      expect(new PaymentPackage("Test", 10)).not.to.throw(
-        "Value must be a non-negative number"
-      );
-    });
-
-    it("check both parameters", () => {
-      expect(new PaymentPackage()).to.throw("no parameters");
-      expect(new PaymentPackage(null, null)).to.throw("null parameters");
-      expect(new PaymentPackage("name")).to.throw("one parameter");
-    });
+    expect(instance.toString()).not.to.contain('inactive');
   });
-
-  describe("check getter and setter", () => {
-    it("check name", () => {
-      instance._name = "changed";
-      expect(instance._name).to.equal("changed");
-    });
-    it("check value", () => {
-      instance._value = 15;
-      expect(instance._value).to.equal(15);
-    });
-    it("check VAT", () => {
-      instance._VAT = 10;
-      expect(instance._VAT).to.equal(10);
-      expect(instance._VAT).not.to.throw("VAT must be a non-negative number");
-    });
-    it("check active status", () => {
-      instance._active = false;
-      expect(instance._active).to.equal(false);
-    });
+  it('test2', () => {
+    instance.value = 12;
+    expect(instance.value).to.equal(12);
   });
-
-  describe("extra cases", () => {
-    it("check VAT for wrong types", () => {
-      expect(typeof instance._VAT).to.equal("number");
-      expect(instance._VAT).to.equal(20);
-    });
-    it("check VAT for negative number", () => {
-      expect(() => (instance._VAT = -10)).to.throw(
-        "VAT must be a non-negative number"
-      );
-    });
-    it("check VAT for string type", () => {
-      expect(() => (instance._VAT = "-1a0")).to.throw(
-        "VAT must be a non-negative number"
-      );
-    });
-    it("check VAT if is array", () => {
-      expect(() => (instance._VAT = [-10])).to.throw(
-        "VAT must be a non-negative number"
-      );
-    });
+  it('test3', () => {
+    instance.VAT = 30;
+    expect(instance.VAT).to.equal(30);
   });
-  it("check active for type", () => {
-    expect(typeof instance._active).to.equal("boolean");
+  it('test4', () => {
+    instance.active = true;
+    expect(instance.active).to.be.true;
   });
-  it("active with wrong type", () => {
-    expect(() => (instance._active = "123")).to.throw(
-      "Active status must be a boolean"
-    );
+  it('test5', () => {
+    expect(() => new PaymentPackage(10, 'Demo')).to.throw();
   });
-  it("active with array type", () => {
-    expect(() => (instance._active = [1, 2])).to.throw(
-      "Active status must be a boolean"
-    );
+  it('test5.1', () => {
+    expect(() => new PaymentPackage('', 1)).to.throw();
   });
-  it("active change boolean status", () => {
-    expect(() => (instance._active = false)).not.to.throw(
-      "Active status must be a boolean"
-    );
+  it('test5.2', () => {
+    expect(() => new PaymentPackage('Demo', -1)).to.throw();
   });
-
-  //////
-  it("Set value to null", () => {
-    let instance = new PaymentPackage("Name", 100);
-    assert.doesNotThrow(() => {
-      instance.value = 0;
-    });
+  it('test6', () => {
+    expect(() => new PaymentPackage(10)).to.throw();
   });
-  //////
+  it('test6.1', () => {
+    expect(() => new PaymentPackage('10')).to.throw();
+  });
+  it('test7', () => {
+    expect(() => new PaymentPackage()).to.throw();
+  });
+  it('test7.1', () => {
+    expect(() => new PaymentPackage(10, 10)).to.throw();
+  });
+  it('test8', () => {
+    instance.active = false;
+    expect(instance.toString()).to.contain('inactive');
+  });
+  it('test9', () => {
+    instance.active = true;
+    expect(instance.toString()).not.to.contain('inactive');
+  });
+  it('test9.1', () => {
+    expect(() => (instance.active = -1)).to.throw();
+  });
+  it('test9.2', () => {
+    expect(() => (instance.active = undefined)).to.throw();
+  });
+  it('test9.3', () => {
+    expect(() => (instance.active = 'Demo')).to.throw();
+  });
+  it('test9.4', () => {
+    expect(() => (instance.active = {})).to.throw();
+  });
+  it('test10', () => {
+    expect(() => (instance.VAT = -1)).to.throw();
+  });
+  it('test11', () => {
+    expect(() => (instance.VAT = '-1')).to.throw();
+  });
+  it('test12', () => {
+    expect(() => (instance.VAT = undefined)).to.throw();
+  });
+  it('test13', () => {
+    expect(() => (instance.VAT = undefined)).to.throw();
+  });
+  it('test14', () => {
+    expect(() => (instance.value = 0)).not.to.throw();
+  });
+  it('test15', () => {
+    expect(instance.name.length == 0).to.be.false;
+  });
+  it('test16', () => {
+    expect(instance.value.length == 0).to.be.false;
+  });
+  it('test17', () => {
+    expect(instance.VAT.length == 0).to.be.false;
+  });
+  it('test18', () => {
+    expect(instance.active.length == 0).to.be.false;
+  });
+  it('test19', () => {
+    expect(instance.toString().length == 0).to.be.false;
+  });
 });

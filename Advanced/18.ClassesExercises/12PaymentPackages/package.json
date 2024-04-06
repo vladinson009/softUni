@@ -1,17 +1,38 @@
 {
-  "name": "Advanced",
+  "name": "",
   "version": "1.0.0",
   "description": "",
-  "main": "12paymentPackages.js",
-  "scripts": {
-    "test": "mocha 12paymentPackages.test.js"
+  "main": "index.js",
+  "type": "module",
+  "license": "AGPL-version-3.0",
+  "private": false,
+  "engines": {
+    "node": ">= 14.0.0",
+    "npm": ">= 6.0.0"
   },
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": "",
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "",
+    "email": "",
+    "url": ""
+  },
+  "contributors": [
+
+  ],
+  "scripts": {
+    "dev": "",
+    "test": ""
+  },
   "dependencies": {
-    "chai": "^5.1.0",
-    "mocha": "^10.4.0"
+
+  },
+  "devDependencies": {
+
   }
-  
 }

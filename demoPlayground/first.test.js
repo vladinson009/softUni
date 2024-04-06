@@ -1,8 +1,8 @@
-const foo = require("./first");
-const { expect } = require("chai");
+import { foo } from "./first.js";
+import { expect } from "chai";
 
 describe("home", () => {
   it("testTest", () => {
-    expect(() => foo(1, 5)).to.equals(6);
+    expect(foo(1, 5)).to.equal(6);
   });
 });
