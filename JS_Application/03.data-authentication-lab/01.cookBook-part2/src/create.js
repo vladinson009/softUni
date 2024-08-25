@@ -34,7 +34,7 @@ window.addEventListener('load', async () => {
     try {
       const response = await fetch(url, options);
 
-      const data = await response.json();
+      await response.json();
       window.location = '/index.html';
     } catch (er) {
       throw er.message;
