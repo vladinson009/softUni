@@ -5,7 +5,7 @@ const homeSection = document.getElementById('home-page');
 const h1 = document.getElementById('h1');
 const addMovieBtn = document.getElementById('add-movie-button');
 const movie = document.getElementById('movie');
-const movieContainer = document.querySelector(
+export const movieContainer = document.querySelector(
   '.card-deck.d-flex.justify-content-center'
 );
 
@@ -19,7 +19,13 @@ movie.remove();
 export function showHome() {
   getAllMovies();
   const main = document.getElementById('main');
-  main.replaceChildren(homeSection, h1, addMovieBtn, movie);
+  const userData = localStorage.getItem('userData');
+
+  if (userData != null) {
+    main.replaceChildren(homeSection, h1, addMovieBtn, movie);
+  } else {
+    main.replaceChildren(homeSection, h1, movie);
+  }
 }
 
 export async function getAllMovies() {
@@ -41,9 +47,12 @@ export async function getAllMovies() {
 }
 
 function moviePreview(movie) {
+  const userData = localStorage.getItem('userData');
+
   const div = document.createElement('div');
   div.className = 'card mb-4';
-  div.innerHTML = `
+
+  let str = `
   <img class="card-img-top"
     src="${movie.img}"
     alt="Card image cap"
@@ -51,13 +60,18 @@ function moviePreview(movie) {
   />
   <div class="card-body">
     <h4 class="card-title">${movie.title}</h4>
-  </div>
-  <div class="card-footer">
-    <a href="#">
-      <button data-id="${movie._id}" type="button" class="btn btn-info">
+  </div>`;
+
+  if (userData != null) {
+    str += `
+    <div class="card-footer">
+     <a href="#">
+      <button data-id="${movie._id}" type="button" class="btn btn-info detailsBtn">
         Details
       </button>
-    </a>
-  </div>`;
+     </a>
+    </div>`;
+  }
+  div.innerHTML = str;
   movieContainer.appendChild(div);
 }

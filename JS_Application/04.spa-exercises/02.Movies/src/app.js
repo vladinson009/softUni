@@ -1,9 +1,13 @@
 import { updateNav } from './navBar.js';
-import { showHome } from './viewHome.js';
+import { onDelete, onEdit, onLike, onUnlike } from './userReaction.js';
+import { movieDetail, movieExample } from './viewDetailsMovie.js';
+import { movieContainer, showHome } from './viewHome.js';
 import { showLogin, logout } from './viewLogin.js';
 import { showRegister } from './viewRegister.js';
 
 document.querySelector('nav').addEventListener('click', onNav);
+movieContainer.addEventListener('click', onDetails);
+movieExample.addEventListener('click', onInterraction);
 
 const navOptions = {
   homeLink: showHome,
@@ -23,18 +27,49 @@ function onNav(e) {
     action();
   }
 }
+function onDetails(e) {
+  e.preventDefault();
+  const target = e.target;
+  const movieId = target.dataset.id;
+  if (target.className.includes('detailsBtn')) {
+    movieDetail(movieId);
+  } else {
+    return;
+  }
+}
+function onInterraction(e) {
+  e.preventDefault();
+  const target = e.target;
+  const movieId = target.parentElement.dataset.id;
+
+  const interraction = {
+    Like: onLike,
+    Unlike: onUnlike,
+    Edit: onEdit,
+    Delete: onDelete,
+  };
+  if (target.tagName == 'A') {
+    const action = interraction[target.textContent];
+    if (typeof action == 'function') {
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      action(userData, movieId);
+    }
+  }
+}
 
 /**
  * TASKS TO DO
  *
- * - Add Movie
- * Logged-in users should be able to add movie.
- * - Movie Details
- * Logged-in users should be able to view details about movies.
+ * x Add Movie
+ * x Logged-in users should be able to add movie.
+ * x Movie Details
+ * x Logged-in users should be able to view details about movies.
+ * x Like Movie
+ * x Logged-in users should be able to like movie, added by other user.
+ *
+ *
  * - Edit Movie
  * Logged-in users should be able to edit movies, added by them.
- * - Like Movie
- * Logged-in users should be able to like movie, added by other user.
  * - Delete Movie
  * Logged-in users should be able to delete their movies.
  */
