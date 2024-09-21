@@ -1,5 +1,7 @@
-import { host } from './restLinks.js';
+import { host, url } from './restLinks.js';
 import { getLikeFromUser, movieDetail } from './viewDetailsMovie.js';
+import { showEditMovie } from './viewEditMovie.js';
+import { showHome } from './viewHome.js';
 
 export async function onLike(userData, movieId) {
   const options = {
@@ -11,7 +13,7 @@ export async function onLike(userData, movieId) {
     body: JSON.stringify({ movieId }),
   };
   try {
-    const response = await fetch(host + '/data/likes', options);
+    const response = await fetch(host + url.likes, options);
     if (response.ok != true) {
       const err = await response.json();
       throw new Error(err.message);
@@ -33,7 +35,7 @@ export async function onUnlike(userData, movieId) {
     },
   };
   try {
-    const response = await fetch(host + '/data/likes/' + likeId, options);
+    const response = await fetch(host + url.likes + '/' + likeId, options);
     if (response.ok != true) {
       const err = await response.json();
       throw new Error(err.message);
@@ -43,5 +45,19 @@ export async function onUnlike(userData, movieId) {
     throw alert(error.message);
   }
 }
-export async function onEdit(userData, movieId) {}
-export async function onDelete(userData, movieId) {}
+export function onEdit(userData, movieId) {
+  showEditMovie(userData, movieId);
+
+  //
+}
+export async function onDelete(userData, movieId) {
+  const options = {
+    method: 'delete',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Authorization': userData.token,
+    },
+  };
+  fetch(host + url.movies + '/' + movieId, options);
+  showHome();
+}

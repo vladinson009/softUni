@@ -1,5 +1,5 @@
 import { updateNav } from './navBar.js';
-import { host, url } from './restLinks.js';
+import { host, url, main } from './restLinks.js';
 import { showHome } from './viewHome.js';
 
 const registerSection = document.getElementById('form-sign-up');
@@ -9,7 +9,6 @@ form.reset();
 registerSection.remove();
 
 export function showRegister() {
-  const main = document.getElementById('main');
   main.replaceChildren(registerSection);
 }
 

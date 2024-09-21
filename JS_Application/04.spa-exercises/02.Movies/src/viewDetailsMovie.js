@@ -1,12 +1,7 @@
-import { host, url } from './restLinks.js';
+import { host, url, main } from './restLinks.js';
 
 export const movieExample = document.getElementById('movie-example');
-
-//movieDetail.remove();
-
 export async function movieDetail(id) {
-  const userId = JSON.parse(localStorage.getItem('userData')).id;
-  const main = document.getElementById('main');
   main.replaceChildren();
 
   const [getNumOfLikes, getById] = await Promise.all([
@@ -14,13 +9,9 @@ export async function movieDetail(id) {
     getMovieById(id),
   ]);
   renderMovieDetail(getById, getNumOfLikes);
-
-  console.log(id + '<MOVIE ID\n', userId + '< USERID');
-  console.log('\n\n');
-  console.log(getNumOfLikes, 'get NUM OF LIKES');
 }
 
-async function getMovieById(movieId) {
+export async function getMovieById(movieId) {
   try {
     const response = await fetch(host + url.movies + '/' + movieId);
     if (response.ok != true) {
@@ -104,5 +95,5 @@ async function renderMovieDetail(movie, likedCount) {
             </div>`;
   div.innerHTML = str;
   movieExample.replaceChildren(div);
-  document.querySelector('main').replaceChildren(movieExample);
+  main.replaceChildren(movieExample);
 }

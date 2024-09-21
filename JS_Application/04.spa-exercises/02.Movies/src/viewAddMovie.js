@@ -1,4 +1,4 @@
-import { host, url } from './restLinks.js';
+import { host, url, main } from './restLinks.js';
 import { showHome } from './viewHome.js';
 
 const addMovieView = document.getElementById('add-movie');
@@ -11,7 +11,6 @@ form.reset();
 
 export function onAddMovie(e) {
   e.preventDefault();
-  const main = document.getElementById('main');
   main.replaceChildren(addMovieView);
 }
 

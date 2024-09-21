@@ -1,5 +1,5 @@
 import { updateNav } from './navBar.js';
-import { host, url } from './restLinks.js';
+import { host, url, main } from './restLinks.js';
 import { showHome } from './viewHome.js';
 
 const loginSection = document.getElementById('form-login');
@@ -9,7 +9,6 @@ form.reset();
 loginSection.remove();
 
 export function showLogin() {
-  const main = document.getElementById('main');
   main.replaceChildren(loginSection);
 }
 

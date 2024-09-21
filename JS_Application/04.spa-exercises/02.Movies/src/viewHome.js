@@ -1,4 +1,4 @@
-import { host, url } from './restLinks.js';
+import { host, url, main } from './restLinks.js';
 import { onAddMovie } from './viewAddMovie.js';
 
 const homeSection = document.getElementById('home-page');
@@ -18,7 +18,6 @@ movie.remove();
 
 export function showHome() {
   getAllMovies();
-  const main = document.getElementById('main');
   const userData = localStorage.getItem('userData');
 
   if (userData != null) {

@@ -52,24 +52,7 @@ function onInterraction(e) {
     const action = interraction[target.textContent];
     if (typeof action == 'function') {
       const userData = JSON.parse(localStorage.getItem('userData'));
-      action(userData, movieId);
+      userData != null ? action(userData, movieId) : '';
     }
   }
 }
-
-/**
- * TASKS TO DO
- *
- * x Add Movie
- * x Logged-in users should be able to add movie.
- * x Movie Details
- * x Logged-in users should be able to view details about movies.
- * x Like Movie
- * x Logged-in users should be able to like movie, added by other user.
- *
- *
- * - Edit Movie
- * Logged-in users should be able to edit movies, added by them.
- * - Delete Movie
- * Logged-in users should be able to delete their movies.
- */
