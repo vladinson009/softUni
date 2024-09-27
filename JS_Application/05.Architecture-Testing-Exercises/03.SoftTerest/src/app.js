@@ -42,30 +42,3 @@ function onNav(e) {
     navigation['Home'](main);
   }
 }
-
-// should implement
-
-/**
- * Register User:
- * - By given email and password.
- *
- * Login User:
- * - By given email and password, should login an existing user.
- *
- * Logout User:
- * - Successfully logged in users should be able to logout from the app.
- *
- * Dashboard:
- * - All users should be able to see the Dashboard.
- *
- * Create:
- * - Logged in users should be able to Create ideas.
- *
- * Idea Details:
- * - All users should be able to view details about ideas.
- *
- * Delete Idea:
- * - Logged-in users should be abel to delete their ideas.
- *
- *
- */

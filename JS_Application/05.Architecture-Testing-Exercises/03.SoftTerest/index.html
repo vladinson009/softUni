@@ -82,7 +82,12 @@
           <div class="col-md-4">
             <img class="responsive" src="./images/idea.png" alt="" />
           </div>
-          <form class="form-user col-md-7" action="" method="">
+          <form
+            id="registerForm"
+            class="form-user col-md-7"
+            action=""
+            method=""
+          >
             <div class="text-center mb-4">
               <h1 class="h3 mb-3 font-weight-normal">Register</h1>
             </div>
@@ -138,7 +143,7 @@
           <div class="col-md-4">
             <img class="responsive" src="./images/idea.png" alt="" />
           </div>
-          <form class="form-user col-md-7" action="" method="">
+          <form id="loginForm" class="form-user col-md-7" action="" method="">
             <div class="text-center mb-4">
               <h1 class="h3 mb-3 font-weight-normal">Login</h1>
             </div>
@@ -178,69 +183,7 @@
         </div>
       </div>
 
-      <div id="dashboard-holder">
-        <div
-          class="card overflow-hidden current-card details"
-          style="width: 20rem; height: 18rem"
-        >
-          <div class="card-body">
-            <p class="card-text">Dinner Recipe</p>
-          </div>
-          <img
-            class="card-image"
-            src="./images/dinner.jpg"
-            alt="Card image cap"
-          />
-          <a class="btn" href="">Details</a>
-        </div>
-        <div
-          class="card overflow-hidden current-card details"
-          style="width: 20rem; height: 18rem"
-        >
-          <div class="card-body">
-            <p class="card-text">4 easy DIY ideas to try!</p>
-          </div>
-          <img
-            class="card-image"
-            src="./images/brightideacropped.jpg"
-            alt="Card image cap"
-          />
-          <a class="btn" href="">Details</a>
-        </div>
-        <div
-          class="card overflow-hidden current-card details"
-          style="width: 20rem; height: 18rem"
-        >
-          <div class="card-body">
-            <p class="card-text">Best Pilates Workouts to Do at Home</p>
-          </div>
-          <img
-            class="card-image"
-            src="./images/best-pilates-youtube-workouts-2__medium_4x3.jpg"
-            alt="Card image cap"
-          />
-          <a class="btn" href="">Details</a>
-        </div>
-        <h1>No ideas yet! Be the first one :)</h1>
-      </div>
-
-      <div id="dinnerRecipe" class="container home some">
-        <img class="det-img" src="./images/dinner.jpg" />
-        <div class="desc">
-          <h2 class="display-5">Dinner Recipe</h2>
-          <p class="infoType">Description:</p>
-          <p class="idea-description">
-            There are few things as comforting as heaping bowl of pasta at the
-            end of a long day. With so many easy pasta recipes out there,
-            there's something for every palate to love. That's why pasta makes
-            such a quick, easy dinner for your family—it's likely to satisfy
-            everyone's cravings, due to its versatility.
-          </p>
-        </div>
-        <div class="text-center">
-          <a class="btn detb" href="">Delete</a>
-        </div>
-      </div>
+      <div id="dashboard-holder"></div>
 
       <div id="createLink" class="container home wrapper my-md-5 pl-md-5">
         <div class="d-md-flex flex-mb-equal">
@@ -251,7 +194,12 @@
               alt=""
             />
           </div>
-          <form class="form-idea col-md-5" action="#/create" method="post">
+          <form
+            id="createForm"
+            class="form-idea col-md-5"
+            action="#/create"
+            method="post"
+          >
             <div class="text-center mb-4">
               <h1 class="h3 mb-3 font-weight-normal">Share Your Idea</h1>
             </div>

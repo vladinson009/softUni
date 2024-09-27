@@ -1,7 +1,11 @@
 export function userData(method = 'get', data) {
   if (method == 'set') {
-    localStorage.setItem('userData', JSON.stringify(data));
-    return data;
+    const userData = {
+      email: data.email,
+      id: data._id,
+      token: data.accessToken,
+    };
+    return localStorage.setItem('userData', JSON.stringify(userData));
   } else if (method == 'get') {
     return JSON.parse(localStorage.getItem('userData')) ?? false;
   } else if (method == 'delete') {

@@ -3,8 +3,8 @@ import { chromium } from 'playwright-webkit';
 import { expect } from 'chai';
 import mockData from './mock-data.json' assert { type: 'json' };
 
-const host = 'http://localhost:3000'; // Application host (NOT service host - that can be anything)
-const DEBUG = false;
+const host = 'http://localhost:5500'; // Application host (NOT service host - that can be anything)
+const DEBUG = true;
 
 const endpoints = {
   register: '/users/register',
@@ -123,7 +123,7 @@ describe('E2E tests', function () {
   describe('Authentication', () => {
     it('register makes correct API call', async () => {
       const endpoint = '**' + endpoints.register;
-      const email = 'john@abv.bg';
+      const email = 'john1@abv.bg';
       const password = '123456';
 
       page.route(endpoint, (route) =>
