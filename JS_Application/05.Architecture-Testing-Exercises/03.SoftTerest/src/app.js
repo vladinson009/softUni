@@ -5,6 +5,7 @@ import { showHome } from './views/home.js';
 import { showCreate } from './views/create.js';
 import { showLogin } from './views/login.js';
 import { showRegister } from './views/register.js';
+import { logout } from './api.js';
 const main = document.getElementById('main');
 const nav = document.querySelector('nav');
 
@@ -20,8 +21,8 @@ const navigation = {
   Register: showRegister,
   Dashboard: showDashboard,
   Create: showCreate,
-  Logout: () => {
-    userData('delete');
+  Logout: async () => {
+    await logout();
     updateNav(userData);
     showHome(main);
   },

@@ -2,15 +2,23 @@ import { register } from '../api.js';
 import { updateNav } from '../navigation.js';
 import { userData } from '../userData.js';
 import { showHome } from './home.js';
+import { showLogin } from './login.js';
 
 const section = document.getElementById('registerLink');
 section.remove();
+
+const getStartedLink = section.querySelector('a');
 
 const form = section.querySelector('#registerForm');
 form.addEventListener('submit', onRegister);
 
 export function showRegister(main) {
   main.replaceChildren(section);
+
+  getStartedLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    showLogin(main);
+  });
 }
 
 export async function onRegister(e) {
