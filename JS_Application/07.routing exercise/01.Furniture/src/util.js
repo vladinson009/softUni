@@ -1,7 +1,15 @@
 import { render, html } from '/node_modules/lit-html/lit-html.js';
-import { until } from '/node_modules/lit-html/directives/until.js';
 import page from '/node_modules/page/page.mjs';
+const root = document.querySelector('main');
 
+function decorateContext(context, next) {
+  updateUserNav();
+  context.userData = userData;
+  context.render = (content) => render(content, root);
+  const path = context.pathname;
+  updateActiveNav(path);
+  next();
+}
 function userData(method = 'get', data) {
   if (method == 'get') {
     const userData = localStorage.getItem('userData');
@@ -21,6 +29,16 @@ function userData(method = 'get', data) {
     localStorage.removeItem('userData');
   }
 }
+function updateActiveNav(path) {
+  const nav = document.querySelectorAll('header a');
+  nav.forEach((el) => {
+    if (el.getAttribute('href') == path && el.getAttribute('href') != '/') {
+      el.classList.add('active');
+    } else {
+      el.classList.remove('active');
+    }
+  });
+}
 function updateUserNav() {
   const user = document.getElementById('user');
   const guest = document.getElementById('guest');
@@ -32,4 +50,4 @@ function updateUserNav() {
     guest.style.display = 'inline-block';
   }
 }
-export { render, html, page, until, userData, updateUserNav };
+export { html, page, userData, decorateContext };

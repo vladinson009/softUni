@@ -1,4 +1,4 @@
-import { html, updateUserNav } from '/src/util.js';
+import { html } from '/src/util.js';
 import { getAllItems } from '/src/api.js';
 
 const homeTemplate = (cards) => html`<div class="container">
@@ -28,6 +28,5 @@ export const cardTemplate = (data) => html`<div class="col-md-4">
 
 export async function showHome(ctx) {
   const data = await getAllItems();
-  updateUserNav();
   ctx.render(homeTemplate(data.map(cardTemplate)));
 }
