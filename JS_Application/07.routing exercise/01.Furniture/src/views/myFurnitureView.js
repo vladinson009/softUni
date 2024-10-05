@@ -16,6 +16,5 @@ export async function showMyFurniture(context) {
   const myId = context.userData().id;
 
   const data = await getMyFurniture(myId);
-  console.log(data);
   context.render(myFurnitureTemplate(data.map(cardTemplate)));
 }
