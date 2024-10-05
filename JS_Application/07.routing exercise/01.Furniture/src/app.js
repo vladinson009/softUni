@@ -16,6 +16,7 @@ updateUserNav();
 
 page(decorateContext);
 page('/', showHome);
+page('/dashboard', showHome);
 page('/register', showRegister);
 page('/login', showLogin);
 page('/create', showCreate);
@@ -26,11 +27,22 @@ page('/my-furniture', showMyFurniture);
 page.start();
 
 function decorateContext(context, next) {
-  context.render = (content) => render(content, root);
   context.userData = userData;
+  context.render = (content) => render(content, root);
+  const path = context.pathname;
+  updateActiveNav(path);
   next();
 }
-
+function updateActiveNav(path) {
+  const nav = document.querySelectorAll('header a');
+  nav.forEach((el) => {
+    if (el.getAttribute('href') == path && el.getAttribute('href') != '/') {
+      el.classList.add('active');
+    } else {
+      el.classList.remove('active');
+    }
+  });
+}
 async function onLogout() {
   logout();
   page.redirect('/');

@@ -14,7 +14,6 @@ const myFurnitureTemplate = (cards) => html`<div class="container">
 
 export async function showMyFurniture(context) {
   const myId = context.userData().id;
-
   const data = await getMyFurniture(myId);
   context.render(myFurnitureTemplate(data.map(cardTemplate)));
 }

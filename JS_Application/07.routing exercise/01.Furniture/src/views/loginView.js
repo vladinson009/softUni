@@ -17,12 +17,7 @@ const loginTemplate = (onSubmit) => html`<div class="container">
         </div>
         <div class="form-group">
           <label class="form-control-label" for="password">Password</label>
-          <input
-            class="form-control"
-            id="password"
-            type="password"
-            name="password"
-          />
+          <input class="form-control" id="password" type="password" name="password" />
         </div>
         <input type="submit" class="btn btn-primary" value="Login" />
       </div>

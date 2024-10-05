@@ -28,7 +28,6 @@ export const cardTemplate = (data) => html`<div class="col-md-4">
 
 export async function showHome(ctx) {
   const data = await getAllItems();
-
   updateUserNav();
   ctx.render(homeTemplate(data.map(cardTemplate)));
 }
