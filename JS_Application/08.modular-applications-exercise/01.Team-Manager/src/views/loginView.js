@@ -19,8 +19,8 @@ const loginTemplate = (onLogin, error) => html`<section id="login">
 </section>`;
 
 export function showLogin(ctx) {
-  ctx.updateNavBar();
   ctx.render(loginTemplate(onLogin));
+  ctx.updateNavBar();
 
   async function onLogin(e) {
     e.preventDefault();
@@ -35,6 +35,7 @@ export function showLogin(ctx) {
       } else {
         const data = await login(email, password);
         ctx.userData('set', data);
+        ctx.updateNavBar();
         ctx.page.redirect('/my-teams');
       }
     } catch (error) {

@@ -1,6 +1,7 @@
+import { getAllTeams, getPartyMembers, getAllMembers } from '/api.js';
 import { html } from '/lib.js';
 
-const browseTemplate = (isUser) => html`<section id="browse">
+const browseTemplate = (isUser, teams) => html`<section id="browse">
   <article class="pad-med">
     <h1>Team Browser</h1>
   </article>
@@ -9,38 +10,29 @@ const browseTemplate = (isUser) => html`<section id="browse">
         <div class="pad-small"><a href="/create-team" class="action cta">Create Team</a></div>
       </article>`
     : null}
-
-  <article class="layout">
-    <img src="./assets/atat.png" class="team-logo left-col" />
-    <div class="tm-preview">
-      <h2>Storm Troopers</h2>
-      <p>These ARE the droids we're looking for</p>
-      <span class="details">5000 Members</span>
-      <div><a href="#" class="action">See details</a></div>
-    </div>
-  </article>
-
-  <article class="layout">
-    <img src="./assets/rocket.png" class="team-logo left-col" />
-    <div class="tm-preview">
-      <h2>Team Rocket</h2>
-      <p>Gotta catch 'em all!</p>
-      <span class="details">3 Members</span>
-      <div><a href="#" class="action">See details</a></div>
-    </div>
-  </article>
-
-  <article class="layout">
-    <img src="./assets/hydrant.png" class="team-logo left-col" />
-    <div class="tm-preview">
-      <h2>Minions</h2>
-      <p>Friendly neighbourhood jelly beans, helping evil-doers succeed.</p>
-      <span class="details">150 Members</span>
-      <div><a href="#" class="action">See details</a></div>
-    </div>
-  </article>
+  ${teams}
 </section>`;
 
-export function showBrowseTeams(ctx) {
-  ctx.render(browseTemplate(ctx.userData('get')));
+const teamCards = (promiseTeams, members) => html`<article class="layout">
+  <img src=${promiseTeams.logoUrl} class="team-logo left-col" />
+  <div class="tm-preview">
+    <h2>${promiseTeams.name}</h2>
+    <p>${promiseTeams.description}</p>
+    <span class="details">${members} Members</span>
+    <div><a href="/browse-teams/details/${promiseTeams._id}" class="action">See details</a></div>
+  </div>
+</article>`;
+
+export async function showBrowseTeams(ctx) {
+  const allTeams = await getAllTeams();
+  const allMembers = await getAllMembers();
+
+  //const teams = allTeams.map(teamCards);
+  const teams = allTeams.map((el) => {
+    const countMember = allMembers.filter((filter) => filter.teamId == el._id).length;
+    return teamCards(el, countMember);
+  });
+
+  ctx.updateNavBar();
+  ctx.render(browseTemplate(ctx.userData('get'), teams));
 }

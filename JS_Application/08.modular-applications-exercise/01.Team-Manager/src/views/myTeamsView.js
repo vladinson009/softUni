@@ -9,11 +9,11 @@ const myTeamTemplate = () => html`<section id="my-teams">
     <div class="pad-med">
       <p>You are not a member of any team yet.</p>
       <p>
-        <a href="#">Browse all teams</a> to join one, or use the button bellow to cerate your own
-        team.
+        <a href="/browse-teams">Browse all teams</a> to join one, or use the button bellow to
+        cerate your own team.
       </p>
     </div>
-    <div class=""><a href="#" class="action cta">Create Team</a></div>
+    <div class=""><a href="/create-team" class="action cta">Create Team</a></div>
   </article>
 
   <article class="layout">
@@ -29,4 +29,5 @@ const myTeamTemplate = () => html`<section id="my-teams">
 
 export function showMyTeam(ctx) {
   ctx.render(myTeamTemplate());
+  ctx.updateNavBar();
 }

@@ -3,11 +3,16 @@ import { userData } from '/util.js';
 const host = 'http://localhost:3030';
 const endpoints = {
   login: '/users/login',
+  logout: '/users/logout',
   register: '/users/register',
+  createTeam: '/data/teams',
   getAllTeams: '/data/teams',
+  getTeamById: '/data/teams/',
   getAllMembers: '/data/members?where=status%3D%22member%22',
   partyMembers: (id) =>
     `/data/members?where=${encodeURIComponent(`teamId IN (${id}) AND status="member"`)}`,
+  membersInTeam: (teamId) =>
+    `/data/members?where=teamId%3D%22${teamId}%22&load=user%3D_ownerId%3Ausers`,
 };
 
 async function request(url, options) {
@@ -17,9 +22,9 @@ async function request(url, options) {
     if (response.ok != true) {
       if (response.status == 403) {
         userData('remove');
-        const error = await response.json();
-        throw new Error(error.message);
       }
+      const error = await response.json();
+      throw new Error(error.message);
     }
     if (response.status == 204) {
       return response;
@@ -66,16 +71,30 @@ export async function register(email, password) {
 export async function login(email, password) {
   return post(endpoints.login, { email, password });
 }
-
+export async function logout() {
+  get(endpoints.logout);
+  userData('remove');
+}
+// TEAMS REQUEST
 export async function getAllTeams() {
   return get(endpoints.getAllTeams);
 }
+export async function getTeamById(id) {
+  return get(endpoints.getTeamById + id);
+}
+//MEMBERS REQUEST
 export async function getAllMembers() {
   return get(endpoints.getAllMembers);
+}
+export async function getMembersInTeam(teamId) {
+  return get(endpoints.membersInTeam(teamId));
 }
 
 export async function getPartyMembers(teamId) {
   return get(endpoints.partyMembers(decoratedId(teamId)));
+}
+export async function createTeam(name, logoUrl, description) {
+  return post(endpoints.createTeam, { name, logoUrl, description });
 }
 function decoratedId(id) {
   return [...id].map((el) => `"${el}"`);
