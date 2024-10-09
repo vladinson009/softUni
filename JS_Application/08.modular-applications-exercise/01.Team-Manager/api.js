@@ -6,6 +6,7 @@ const endpoints = {
   logout: '/users/logout',
   register: '/users/register',
   createTeam: '/data/teams',
+  editTeam: '/data/teams/',
   getAllTeams: '/data/teams',
   getTeamById: '/data/teams/',
   getAllMembers: '/data/members?where=status%3D%22member%22',
@@ -13,6 +14,9 @@ const endpoints = {
     `/data/members?where=${encodeURIComponent(`teamId IN (${id}) AND status="member"`)}`,
   membersInTeam: (teamId) =>
     `/data/members?where=teamId%3D%22${teamId}%22&load=user%3D_ownerId%3Ausers`,
+  becomeMember: '/data/members',
+  approveMember: '/data/members/',
+  removeMember: '/data/members/',
 };
 
 async function request(url, options) {
@@ -95,6 +99,18 @@ export async function getPartyMembers(teamId) {
 }
 export async function createTeam(name, logoUrl, description) {
   return post(endpoints.createTeam, { name, logoUrl, description });
+}
+export async function editTeam(id, name, logoUrl, description) {
+  return put(endpoints.editTeam + id, { name, logoUrl, description });
+}
+export async function becomeMember(teamId) {
+  return post(endpoints.becomeMember, { teamId });
+}
+export async function approveMember(id) {
+  return put(endpoints.approveMember + id, { status: 'member' });
+}
+export async function removeMember(id) {
+  return del(endpoints.removeMember + id);
 }
 function decoratedId(id) {
   return [...id].map((el) => `"${el}"`);

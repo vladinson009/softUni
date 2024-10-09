@@ -8,6 +8,7 @@ import { showCreateTeam } from './src/views/createTeamView.js';
 import { showMyTeam } from './src/views/myTeamsView.js';
 import { logout } from './api.js';
 import { showTeamDetail } from './src/views/teamDetailsView.js';
+import { showEditTeam } from './src/views/editTeamView.js';
 
 document.getElementById('logoutBtn').addEventListener('click', onLogout);
 
@@ -19,12 +20,14 @@ page('/browse-teams', showBrowseTeams);
 page('/create-team', showCreateTeam);
 page('/my-teams', showMyTeam);
 page('/browse-teams/details/:id', showTeamDetail);
+page('/browse-teams/edit/:id', showEditTeam);
 
 page.start();
 
 // next task
 
-// Logged user, who is not a member of the team (there is no request with _ownerId matching the Id of the current user) can see the list with member names and the button "Join Team"
+// approve membership
+// leave team, declinq request, remove member from team
 
 async function onLogout(e) {
   e.preventDefault();
