@@ -9,6 +9,7 @@ import { showMyTeam } from './src/views/myTeamsView.js';
 import { logout } from './api.js';
 import { showTeamDetail } from './src/views/teamDetailsView.js';
 import { showEditTeam } from './src/views/editTeamView.js';
+import { showModal } from './src/views/modal.js';
 
 document.getElementById('logoutBtn').addEventListener('click', onLogout);
 
@@ -16,11 +17,13 @@ page(decorateContext);
 page('/', showHome);
 page('/login', showLogin);
 page('/register', showRegister);
-page('/browse-teams', showBrowseTeams);
 page('/create-team', showCreateTeam);
 page('/my-teams', showMyTeam);
+page('/my-teams/details/:id', showTeamDetail);
+page('/browse-teams', showBrowseTeams);
 page('/browse-teams/details/:id', showTeamDetail);
 page('/browse-teams/edit/:id', showEditTeam);
+page('/message', showModal);
 
 page.start();
 

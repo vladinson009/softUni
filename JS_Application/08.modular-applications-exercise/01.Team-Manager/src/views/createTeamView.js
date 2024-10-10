@@ -1,3 +1,4 @@
+import { showModal } from '/src/views/modal.js';
 import { createTeam } from '/api.js';
 import { html } from '/lib.js';
 
@@ -17,6 +18,7 @@ const createTeamTemplate = (onSubmit, error) => html`<section id="create">
 </section>`;
 
 export function showCreateTeam(ctx) {
+  ctx.updateNavBar();
   ctx.render(createTeamTemplate(onSubmit));
 
   async function onSubmit(e) {
@@ -39,7 +41,7 @@ export function showCreateTeam(ctx) {
 
       ctx.page.redirect('/browse-teams/details/' + newTeam._id);
     } catch (error) {
-      ctx.render(createTeamTemplate(onSubmit, error.message));
+      showModal(ctx, error.message, createTeamTemplate(onSubmit));
     }
   }
 }

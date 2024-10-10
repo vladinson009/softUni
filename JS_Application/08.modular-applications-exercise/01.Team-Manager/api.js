@@ -86,6 +86,12 @@ export async function getAllTeams() {
 export async function getTeamById(id) {
   return get(endpoints.getTeamById + id);
 }
+export async function createTeam(name, logoUrl, description) {
+  return post(endpoints.createTeam, { name, logoUrl, description });
+}
+export async function editTeam(id, name, logoUrl, description) {
+  return put(endpoints.editTeam + id, { name, logoUrl, description });
+}
 //MEMBERS REQUEST
 export async function getAllMembers() {
   return get(endpoints.getAllMembers);
@@ -96,12 +102,6 @@ export async function getMembersInTeam(teamId) {
 
 export async function getPartyMembers(teamId) {
   return get(endpoints.partyMembers(decoratedId(teamId)));
-}
-export async function createTeam(name, logoUrl, description) {
-  return post(endpoints.createTeam, { name, logoUrl, description });
-}
-export async function editTeam(id, name, logoUrl, description) {
-  return put(endpoints.editTeam + id, { name, logoUrl, description });
 }
 export async function becomeMember(teamId) {
   return post(endpoints.becomeMember, { teamId });
