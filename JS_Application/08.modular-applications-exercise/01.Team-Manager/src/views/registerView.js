@@ -47,8 +47,7 @@ export function showRegister(ctx) {
         throw new Error("Passwords doesnt't match!");
       }
 
-      const data = await register(email, password);
-      data.username = username;
+      const data = await register(email, password, username);
       ctx.userData('set', data);
       ctx.page.redirect('/');
       ev.target.reset();

@@ -69,8 +69,8 @@ async function put(url, data) {
 async function del(url) {
   return request(url, createOptions('delete'));
 }
-export async function register(email, password) {
-  return post(endpoints.register, { email, password });
+export async function register(email, password, username) {
+  return post(endpoints.register, { email, password, username });
 }
 export async function login(email, password) {
   return post(endpoints.login, { email, password });

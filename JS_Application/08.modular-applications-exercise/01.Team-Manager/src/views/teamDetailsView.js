@@ -208,7 +208,6 @@ export async function showTeamDetail(ctx) {
   async function onRemove(e) {
     e.preventDefault();
     //const requestedId = members.find((el) => el._ownerId == currentUserId)._id;
-    console.log(e.target.getAttribute('href'));
     const requestedId = e.target.getAttribute('href');
 
     if (requestedId) {
