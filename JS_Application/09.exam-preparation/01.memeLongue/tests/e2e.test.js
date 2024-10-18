@@ -1,10 +1,14 @@
-const { chromium } = require('playwright-chromium');
-const { expect } = require('chai');
+//const { chromium } = require('playwright-chromium');
+//const { expect } = require('chai');
+import { chromium } from 'playwright-chromium';
+import { expect } from 'chai';
 
 const host = 'http://localhost:5500'; // Application host (NOT service host - that can be anything)
 const DEBUG = false;
 
-const mockData = require('./mock-data.json');
+//const mockData = require('./mock-data.json');
+import mockData from './mock-data.json' assert { type: 'json' };
+
 const endpoints = {
   register: '/users/register',
   login: '/users/login',
@@ -624,7 +628,7 @@ describe('E2E tests', function () {
     });
   });
 
-  describe('BONUS: Notifications [ 5 Points ]', () => {
+  describe.only('BONUS: Notifications [ 5 Points ]', () => {
     it('Login notification with invalid data', async () => {
       const endpoint = '**' + endpoints.login;
       let called = false;
