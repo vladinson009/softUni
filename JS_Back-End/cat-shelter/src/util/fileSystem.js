@@ -1,12 +1,12 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 
-function readFile(pathFile) {
+async function readFile(pathFile) {
   const relative = path.join('./', pathFile);
-  return fs.readFileSync(relative, 'utf-8');
+  return await fs.readFile(relative, 'utf-8');
 }
-function writeFile(pathFile, extname, data) {
+async function writeFile(pathFile, extname, data) {
   const relative = path.join('./', pathFile + '.' + extname);
-  fs.writeFileSync(relative, data);
+  return await fs.writeFile(relative, data);
 }
 module.exports = { readFile, writeFile };

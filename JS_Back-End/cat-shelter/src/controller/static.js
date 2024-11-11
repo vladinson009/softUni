@@ -10,9 +10,9 @@ function getContentType(url) {
   }
 }
 
-function serveStatic(req, res) {
+async function serveStatic(req, res) {
   if (req.url.startsWith('/content') && req.method == 'GET') {
-    const data = readFile(req.url);
+    const data = await readFile(req.url);
     const contentType = getContentType(req.url);
 
     res.writeHead(200, {

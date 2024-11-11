@@ -1,11 +1,14 @@
 const { readFile } = require('../util/fileSystem');
 
-function homeView(req, res) {
+async function homeView(req, res) {
   if (req.url == '/' && req.method == 'GET') {
-    const readCats = JSON.parse(readFile('/data/cats.json'));
-    const catTemplate = readFile('/views/partials/homepageCat.html');
-    let index = readFile('/views/home/index.html');
-    let homePage = readFile('/views/mainPage.html');
+    let [readCats, catTemplate, index, homePage] = await Promise.all([
+      readFile('/data/cats.json'),
+      readFile('/views/partials/homepageCat.html'),
+      readFile('/views/home/index.html'),
+      readFile('/views/mainPage.html'),
+    ]);
+    readCats = JSON.parse(readCats);
     const cats = readCats.map((cat) => {
       let temp = catTemplate;
       Object.entries(cat).forEach(([k, v]) => {
