@@ -1,0 +1,30 @@
+[
+  {
+    "_id": 1,
+    "name": "George",
+    "breed": "Fun",
+    "description": "Very funny cat",
+    "imageUrl": "https://t4.ftcdn.net/jpg/02/66/72/41/360_F_266724172_Iy8gdKgMa7XmrhYYxLCxyhx6J7070Pr8.jpg"
+  },
+  {
+    "_id": 2,
+    "name": "Jonny",
+    "breed": "Bomby",
+    "description": "Very funny cat",
+    "imageUrl": "https://t4.ftcdn.net/jpg/02/66/72/41/360_F_266724172_Iy8gdKgMa7XmrhYYxLCxyhx6J7070Pr8.jpg"
+  },
+  {
+    "_id": 3,
+    "name": "Tom",
+    "breed": "Meles",
+    "description": "Very funny cat",
+    "imageUrl": "https://t4.ftcdn.net/jpg/02/66/72/41/360_F_266724172_Iy8gdKgMa7XmrhYYxLCxyhx6J7070Pr8.jpg"
+  },
+  {
+    "_id": 4,
+    "name": "Poohie",
+    "breed": "Unknown",
+    "description": "Very funny cat",
+    "imageUrl": "https://t4.ftcdn.net/jpg/02/66/72/41/360_F_266724172_Iy8gdKgMa7XmrhYYxLCxyhx6J7070Pr8.jpg"
+  }
+]

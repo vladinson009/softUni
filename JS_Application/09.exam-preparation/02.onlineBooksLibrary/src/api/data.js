@@ -6,7 +6,7 @@ export async function getAllBooks() {
 export async function getBookById(bookId) {
   return get('/data/books/' + bookId);
 }
-export async function getMybooks(userId) {
+export async function getMyBooks(userId) {
   return get(`/data/books?where=_ownerId%3D%22${userId}%22&sortBy=_createdOn%20desc`);
 }
 export async function createBook(title, description, imageUrl, type) {
