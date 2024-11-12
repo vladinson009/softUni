@@ -1,11 +1,11 @@
 const { readFile, writeFile } = require('../util/fileSystem');
-const querystring = require('querystring');
 async function addBreedView(req, res) {
   if (req.url == '/cats/add-breed' && req.method == 'GET') {
     const main = await readFile('/views/home/index.html');
     const addBreedView = await readFile('/views/addBreed.html');
 
     let result = main.replace('{{{body}}}', addBreedView);
+    result = result.replace('%%form%%', '');
     res.writeHead(200, {
       'Content-Type': 'text/html',
     });

@@ -2,9 +2,10 @@ const { readFile } = require('../util/fileSystem');
 
 async function homeView(req, res) {
   if (req.url == '/' && req.method == 'GET') {
-    let [readCats, catTemplate, index, homePage] = await Promise.all([
+    let [readCats, catTemplate, search, index, homePage] = await Promise.all([
       readFile('/data/cats.json'),
       readFile('/views/partials/homepageCat.html'),
+      readFile('/views/partials/homepageSearch.html'),
       readFile('/views/home/index.html'),
       readFile('/views/mainPage.html'),
     ]);
@@ -18,7 +19,8 @@ async function homeView(req, res) {
       return temp;
     });
     let result = index.replace('{{{body}}}', homePage);
-    result = result.replace('{{{body}}}', cats);
+    result = result.replace('%%form%%', search);
+    result = result.replace('{{{body}}}', cats.join('\n'));
 
     res.writeHead(200, {
       'Content-Type': 'text/html',

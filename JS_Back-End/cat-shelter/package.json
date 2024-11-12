@@ -11,5 +11,8 @@
   "description": "",
   "devDependencies": {
     "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "formidable": "^3.5.2"
   }
 }
