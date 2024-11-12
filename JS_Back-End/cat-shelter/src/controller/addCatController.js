@@ -4,10 +4,6 @@ const formidable = require('formidable');
 const path = require('path');
 async function addCatView(req, res) {
   if (req.url == '/cats/add-cat' && req.method == 'GET') {
-    // const breeds = JSON.parse(await readFile('/data/breeds.json'));
-    // const main = await readFile('/views/home/index.html');
-    // const addCatView = await readFile('/views/addCat.html');
-    // const addCatOptionTemplate = await readFile('/views/partials/addCatOption.html');
     let [breeds, main, addCatView, addCatOptionTemplate] = await Promise.all([
       readFile('/data/breeds.json'),
       readFile('/views/home/index.html'),
