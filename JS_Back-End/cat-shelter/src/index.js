@@ -11,5 +11,3 @@ http
     }
   })
   .listen(port);
-
-//next task is Post request for edit cat

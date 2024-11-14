@@ -1,7 +1,9 @@
+const { editCatForm } = require('../util/catFormParser');
 const { readFile } = require('../util/fileSystem');
+
 async function editCatView(req, res) {
+  const catId = req.url.split('/')[2];
   if (req.url.includes('/edit') && req.method == 'GET') {
-    const catId = req.url.split('/')[2];
     let [cats, breeds, main, EditCatView, addCatOptionTemplate] = await Promise.all([
       readFile('/data/cats.json'),
       readFile('/data/breeds.json'),
@@ -13,6 +15,13 @@ async function editCatView(req, res) {
     breeds = JSON.parse(breeds);
     ////
     const cat = cats.find((obj) => obj._id === catId);
+    if (!cat) {
+      res.writeHead(302, {
+        location: '/',
+      });
+      res.end();
+      return;
+    }
     let options = breeds.map((br) => {
       if (cat.breed == br) {
         return `<option value="${br}" selected>${br}</option>`;
@@ -33,8 +42,7 @@ async function editCatView(req, res) {
     res.write(result);
     res.end();
   } else if (req.url.includes('/edit') && req.method == 'POST') {
-    res.writeHead(302, { location: '/' });
-    res.end('File uploaded successfully!');
+    await editCatForm(req, res, catId);
   } else {
     return true;
   }
