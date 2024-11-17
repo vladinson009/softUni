@@ -1,7 +1,7 @@
 import uniqid from 'uniqid';
 import { Router } from 'express';
 import { Movie } from '../Models/MovieModel.js';
-import { create } from '../services/movieService.js';
+import { create, getById } from '../services/movieService.js';
 export const router = Router();
 router.get('/create', (req, res) => {
   res.render('create');
@@ -27,4 +27,10 @@ router.post('/create', async (req, res) => {
     return res.render('create', { err: error.message, movie });
   }
   res.redirect('/');
+});
+router.get('/:movieId/details', async (req, res) => {
+  const movieId = req.params.movieId;
+  const movie = await getById(movieId);
+  movie.ratingStars = '&#x2605;'.repeat((Math.floor(movie.rating / 2)));
+  res.render('details', { movie });
 });
