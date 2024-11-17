@@ -13,5 +13,4 @@ app.engine('hbs', handlebars.engine({ extname: 'hbs' }));
 
 //setup for express
 app.use(router);
-app.all('*', (req, res) => res.render('404'));
 app.listen(PORT, () => console.log(`Server is listening on http://localhost:${PORT} ...`));
