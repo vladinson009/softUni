@@ -1,0 +1,24 @@
+{
+  "movies": [
+    {
+      "id": "4lmbs0b5pm3lszddo",
+      "title": "Superman",
+      "genre": "Adventure",
+      "director": "James Gunn",
+      "year": "2025",
+      "imageUrl": "https://preview.redd.it/superman-2025-fan-poster-v0-uu9y7xosg1dd1.jpeg?auto=webp&s=a6b8bb680df372fc19245b3d94122516357d0b30",
+      "rating": 8,
+      "description": "Follows the titular superhero as he reconciles his heritage with his human upbringing. He is the embodiment of truth, justice and the American way in a world that views this as old-fashioned..."
+    },
+    {
+      "id": "4lmbs0bk0m3lt6mad",
+      "title": "The Batman",
+      "genre": "Action Epic",
+      "director": "Matt Reeves",
+      "year": "2022",
+      "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUxqwYMBUAXCYtwW0PsqZP3IRG4K9luA74Yw&s",
+      "rating": 8,
+      "description": "When a sadistic serial killer begins murdering key political figures in Gotham, the Batman is forced to investigate the city's hidden corruption and question his family's involvement."
+    }
+  ]
+}

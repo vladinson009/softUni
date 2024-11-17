@@ -1,7 +1,11 @@
 import { Router } from 'express';
 import { router as homeRouter } from './controllers/homeController.js';
-const router = Router();
+import { router as aboutRouter } from './controllers/aboutController.js';
+import { router as createRouter } from './controllers/moviesController.js';
 
-router.use('/', homeRouter);
+const router = Router();
+router.use(homeRouter, aboutRouter, createRouter);
+// router.use();
+// router.use();
 
 export { router };
