@@ -5,7 +5,6 @@ import { router as moviesRouter } from './controllers/moviesController.js';
 
 const router = Router();
 router.use(homeRouter, aboutRouter);
-router.use('movies/', moviesRouter);
-// router.use();
+router.use('/movies', moviesRouter);
 
 export { router };
