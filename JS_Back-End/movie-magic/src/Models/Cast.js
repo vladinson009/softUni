@@ -3,12 +3,12 @@ import { urlValidator } from '../configs/modelConfigs.js';
 const currentYear = new Date().getFullYear();
 // Define the schema
 const castSchema = new Schema({
-  name: { type: String, required: true },
-  age: { type: Number, required: true, min: 18, max: 67 },
-  born: { type: String, required: true },
-  imageURL: {
+  name: { type: String, required: [true, 'Name is required!'] },
+  age: { type: Number, required: [true, 'aame is required!'], min: 18, max: 67 },
+  born: { type: String, required: [true, 'Born is required!'] },
+  imageUrl: {
     type: String,
-    required: true,
+    required: [true, 'Image is required!'],
     validate: urlValidator(),
   },
   movie: [
