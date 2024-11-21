@@ -1,4 +1,4 @@
-import { Schema, SchemaType, Types, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { urlValidator } from '../configs/modelConfigs.js';
 const currentYear = new Date().getFullYear();
 // Define the schema
