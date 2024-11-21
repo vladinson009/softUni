@@ -8,6 +8,6 @@ const router = Router();
 router.use(homeAndSearch, aboutRouter);
 router.use('/movies', moviesRouter);
 router.use('/cast', castRouter);
-router.all('*', (req, res) => res.render('404'));
+//router.all('*', (req, res) => res.render('404'));
 
 export { router };

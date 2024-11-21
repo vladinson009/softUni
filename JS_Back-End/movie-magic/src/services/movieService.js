@@ -8,3 +8,13 @@ export function getById(movieId) {
 export function create(data) {
   return Movie.create(data);
 }
+export function attachCast(movieId, castId, nameInMovie) {
+  return Movie.findByIdAndUpdate(movieId, {
+    $push: {
+      cast: {
+        nameInMovie,
+        cast: castId,
+      },
+    },
+  });
+}

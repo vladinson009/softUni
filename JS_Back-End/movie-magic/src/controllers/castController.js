@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { createCast } from '../services/castService.js';
+import { createCast, getCastWithout } from '../services/castService.js';
+import { attachCast, getById } from '../services/movieService.js';
 
 export const router = Router();
 
@@ -17,4 +18,17 @@ router.post('/create', async (req, res) => {
     return;
   }
   res.redirect('/');
+});
+router.get('/:movieId/attach', async (req, res) => {
+  const movieId = req.params.movieId;
+  const movie = await getById(movieId).lean();
+  const cast = await getCastWithout(movie.cast).lean();
+
+  res.render('cast-attach', { movie, cast });
+});
+router.post('/:movieId/attach', async (req, res) => {
+  const movieId = req.params.movieId;
+  const { nameInMovie, cast } = req.body;
+  await attachCast(movieId, cast, nameInMovie);
+  res.redirect(`/movies/${movieId}/details`);
 });
