@@ -175,3 +175,6 @@ footer {
   color: red;
   font-size: 14px;
 }
+.attachBtn {
+  display: inline-block;
+}

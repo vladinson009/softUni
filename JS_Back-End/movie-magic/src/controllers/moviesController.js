@@ -26,7 +26,7 @@ router.post('/create', async (req, res) => {
 });
 router.get('/:movieId/details', async (req, res) => {
   const movieId = req.params.movieId;
-  const movie = await getById(movieId).lean();
+  const movie = await getById(movieId).populate('cast.cast').lean();
   movie.ratingStars = '&#x2605;'.repeat(Math.floor(movie.rating / 2));
   res.render('details', { movie });
 });

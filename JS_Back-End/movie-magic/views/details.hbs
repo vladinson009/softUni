@@ -19,12 +19,27 @@
                 </div>
 
                 <p class="disc">Description: {{description}}</p>
+                <a href='/cast/{{_id}}/attach' class='details attachBtn'>Attach Cast</a>
             </div>
         </div>
         <div class="card_right">
             <img src="{{imageUrl}}" alt="{{title}}">
         </div>
     </div>
-
+    <div class="main-cast-card">
+        {{#each cast}}
+        <div class="cast-card">
+            <div class="card-img">
+                <img src="{{cast.imageUrl}}" alt="{{cast.name}}">
+            </div>
+            <div class="cast-info">
+                <h1>Name {{cast.name}}</h1>
+                <h3>Age: {{cast.age}}</h3>
+                <h3>Born: {{cast.born}}</h3>
+                <h3>Name in Movie: {{nameInMovie}}</h3>
+            </div>
+        </div>
+        {{/each}}
+    </div>
 </section>
 {{/with}}
