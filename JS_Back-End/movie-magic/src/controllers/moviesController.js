@@ -1,6 +1,6 @@
 import uniqid from 'uniqid';
 import { Router } from 'express';
-import { Movie } from '../Models/MovieModel.js';
+import Movie from '../Models/Movie.js';
 import { create, getById } from '../services/movieService.js';
 export const router = Router();
 router.get('/create', (req, res) => {
