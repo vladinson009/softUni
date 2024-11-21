@@ -1,15 +1,10 @@
-import { readFile, writeFile } from './fileSystem.js';
-
-export async function getAll() {
-  const data = await readFile();
-  return data.movies;
+import Movie from '../Models/Movie.js';
+export function getAll() {
+  return Movie.find();
 }
-export async function getById(movieId) {
-  const data = await readFile();
-  const movies = data.movies;
-
-  return movies.find((movie) => movie.id == movieId);
+export function getById(movieId) {
+  return Movie.findOne({ _id: movieId });
 }
-export async function create(movie) {
-  await writeFile(movie);
+export function create(data) {
+  return Movie.create(data);
 }
