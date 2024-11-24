@@ -18,6 +18,11 @@ const movieSchema = new Schema({
     required: true,
     validate: urlValidator(),
   },
+  creatorId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   cast: [
     {
       _id: false,
