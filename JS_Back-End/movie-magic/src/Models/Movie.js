@@ -13,12 +13,12 @@ const movieSchema = new Schema({
     required: true,
     maxLength: [100, 'Description cannot exceed 100 characters'],
   },
-  imageURL: {
+  imageUrl: {
     type: String,
     required: true,
     validate: urlValidator(),
   },
-  creatorId: {
+  ownerId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,

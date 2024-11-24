@@ -29,5 +29,6 @@ export function isToken(req, res, next) {
     res.redirect('/users/login');
   }
   res.locals.email = verified.email;
+  res.locals._id = verified._id;
   next();
 }

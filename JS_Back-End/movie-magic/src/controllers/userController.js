@@ -12,7 +12,9 @@ router.post('/register', isUserGuard, async (req, res) => {
   res.locals.email = email;
   try {
     const user = await register(email, password, repass);
-    const token = jwt.sign({ email: user.email }, process.env.SECRET, { expiresIn: '2h' });
+    const token = jwt.sign({ email: user.email, _id: user._id }, process.env.SECRET, {
+      expiresIn: '2h',
+    });
     res.cookie('auth', token, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000 });
     res.redirect('/');
   } catch (error) {

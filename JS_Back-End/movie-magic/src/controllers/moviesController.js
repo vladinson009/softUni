@@ -6,6 +6,7 @@ router.get('/create', isGuestGuard, (req, res) => {
   res.render('create');
 });
 router.post('/create', isGuestGuard, async (req, res) => {
+  const ownerId = res.locals?._id;
   const data = Object.entries(req.body).reduce((acc, [k, v]) => {
     acc[k] = v.trim();
     return acc;
@@ -19,7 +20,11 @@ router.post('/create', isGuestGuard, async (req, res) => {
     if (rating < 1 && rating > 10) {
       throw new Error('Rating must be between 1 and 10');
     }
-    await create({ title, genre, director, year, imageUrl, rating, description });
+    const data = { title, genre, director, year, imageUrl, rating, description };
+    if (ownerId) {
+      data.ownerId = ownerId;
+    }
+    await create(data);
   } catch (error) {
     return res.render('create', { err: error.message, movie: data });
   }
@@ -27,7 +32,12 @@ router.post('/create', isGuestGuard, async (req, res) => {
 });
 router.get('/:movieId/details', async (req, res) => {
   const movieId = req.params.movieId;
+
+  const userId = res.locals?._id;
   const movie = await getById(movieId).populate('cast.cast').lean();
+  const isOwner = userId && userId == movie.ownerId?.toString();
+
   movie.ratingStars = '&#x2605;'.repeat(Math.floor(movie.rating / 2));
-  res.render('details', { movie });
+  movie.isOwner = isOwner;
+  res.render('details', { movie, isOwner });
 });

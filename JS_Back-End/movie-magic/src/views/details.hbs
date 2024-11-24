@@ -19,8 +19,14 @@
                 </div>
 
                 <p class="disc">Description: {{description}}</p>
-                <a href='/cast/{{_id}}/attach' class='details attachBtn'>Attach Cast</a>
             </div>
+            {{#if isOwner}}
+            <div class="details-btn">
+                <a href="/cast/{{_id}}/attach" id="cast-button">Attach</a>
+                <a href="#" id="edit-button">Edit</a>
+                <a href="#" id="delete-button">Delete</a>
+            </div>
+            {{/if}}
         </div>
         <div class="card_right">
             <img src="{{imageUrl}}" alt="{{title}}">
