@@ -12,10 +12,18 @@
       <img src='/public/img/logo.webp' alt='logo' />
       <ul class='menu'>
         <li><a href='/'>Home</a></li>
+        <li><a href='/about'>About</a></li>
+        <li><a href='/search'>Search</a></li>
+        <!--Users-->
+        {{#if email}}
         <li><a href='/movies/create'>Create Post</a></li>
         <li><a href="/cast/create">Create Cast</a></li>
-        <li><a href='/search'>Search</a></li>
-        <li><a href='/about'>About</a></li>
+        <li><a href="/users/logout">Logout</a></li>
+        {{else}}
+        <!--Guest-->
+        <li><a href="/users/login">Login</a></li>
+        <li><a href="/users/register">Register</a></li>
+        {{/if}}
       </ul>
     </nav>
     <main>
