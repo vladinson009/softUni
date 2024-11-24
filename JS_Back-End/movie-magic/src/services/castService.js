@@ -1,4 +1,4 @@
-import Cast from '../Models/Cast.js';
+import Cast from '../models/Cast.js';
 
 export function createCast(data) {
   return Cast.create(data);

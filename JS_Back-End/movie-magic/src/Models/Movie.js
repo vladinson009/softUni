@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { urlValidator } from '../configs/modelConfigs.js';
+import { urlValidator } from '../configs/modelUrlVerification.js';
 const currentYear = new Date().getFullYear();
 // Define the schema
 const movieSchema = new Schema({
