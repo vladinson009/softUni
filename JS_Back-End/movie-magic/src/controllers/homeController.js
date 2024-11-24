@@ -14,17 +14,17 @@ router.get('/search', async (req, res) => {
 
 router.get('/search/movies', async (req, res) => {
   const values = req.query;
-  const movies = Object.values(await getAll()).filter((movie) => {
-    if (
-      movie.title.toLowerCase().includes(values.title.toLowerCase()) &&
-      movie.genre.toLowerCase().includes(values.genre.toLowerCase()) &&
-      movie.year.toLowerCase().includes(values.year.toLowerCase())
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  });
+  values.year = Number(values.year);
+  const filter = {};
+
+  if (values.title) {
+    filter.title = { $regex: values.title, $options: 'i' };
+  }
+  if (values.genre) {
+    filter.genre = { $regex: values.genre, $options: 'i' };
+  }
+  //TODO: search by year
+  const movies = await getAll(filter).lean();
 
   res.render('home', { isSearch: true, movies, values });
 });

@@ -1,6 +1,6 @@
 import Movie from '../models/Movie.js';
-export function getAll() {
-  return Movie.find();
+export function getAll(filter = {}) {
+  return Movie.find(filter);
 }
 export function getById(movieId) {
   return Movie.findOne({ _id: movieId });

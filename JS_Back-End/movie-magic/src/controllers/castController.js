@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import { createCast, getCastWithout } from '../services/castService.js';
 import { attachCast, getById } from '../services/movieService.js';
-
 export const router = Router();
 
 router.get('/create', (req, res) => {

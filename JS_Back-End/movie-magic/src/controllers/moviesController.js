@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import { create, getById } from '../services/movieService.js';
+import { isGuestGuard } from '../middlewares/authMiddleware.js';
 export const router = Router();
-router.get('/create', (req, res) => {
+router.get('/create', isGuestGuard, (req, res) => {
   res.render('create');
 });
-router.post('/create', async (req, res) => {
+router.post('/create', isGuestGuard, async (req, res) => {
   const data = Object.entries(req.body).reduce((acc, [k, v]) => {
     acc[k] = v.trim();
     return acc;
