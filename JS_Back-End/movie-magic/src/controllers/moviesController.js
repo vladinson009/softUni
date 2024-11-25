@@ -41,9 +41,12 @@ router.get('/:movieId/details', async (req, res) => {
   movie.isOwner = isOwner;
   res.render('movie/details', { movie, isOwner });
 });
-router.get('/:movieId/edit', async (req, res) => {
+router.get('/:movieId/edit', isGuestGuard, async (req, res) => {
   const movieId = req.params.movieId;
   const movie = await getById(movieId);
 
   res.render('movie/edit', movie);
+});
+router.post('/:movie/:movieId/edit', isGuestGuard, async (req, res) => {
+  const movieId = req.params.movieId;
 });
