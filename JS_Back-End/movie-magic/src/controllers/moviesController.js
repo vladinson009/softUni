@@ -3,7 +3,7 @@ import { create, getById } from '../services/movieService.js';
 import { isGuestGuard } from '../middlewares/authMiddleware.js';
 export const router = Router();
 router.get('/create', isGuestGuard, (req, res) => {
-  res.render('create');
+  res.render('movie/create');
 });
 router.post('/create', isGuestGuard, async (req, res) => {
   const ownerId = res.locals?._id;
@@ -26,7 +26,7 @@ router.post('/create', isGuestGuard, async (req, res) => {
     }
     await create(data);
   } catch (error) {
-    return res.render('create', { err: error.message, movie: data });
+    return res.render('movie/create', { err: error.message, movie: data });
   }
   res.redirect('/');
 });
@@ -39,5 +39,11 @@ router.get('/:movieId/details', async (req, res) => {
 
   movie.ratingStars = '&#x2605;'.repeat(Math.floor(movie.rating / 2));
   movie.isOwner = isOwner;
-  res.render('details', { movie, isOwner });
+  res.render('movie/details', { movie, isOwner });
+});
+router.get('/:movieId/edit', async (req, res) => {
+  const movieId = req.params.movieId;
+  const movie = await getById(movieId);
+
+  res.render('movie/edit', movie);
 });

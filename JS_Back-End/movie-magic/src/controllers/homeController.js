@@ -23,7 +23,7 @@ router.get('/search/movies', async (req, res) => {
   if (values.genre) {
     filter.genre = { $regex: values.genre, $options: 'i' };
   }
-  //TODO: search by year
+  //TODO: search by year filter
   const movies = await getAll(filter).lean();
 
   res.render('home', { isSearch: true, movies, values });
