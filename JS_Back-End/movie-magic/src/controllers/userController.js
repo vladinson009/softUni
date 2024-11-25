@@ -26,9 +26,13 @@ router.get('/login', isUserGuard, (req, res) => {
 });
 router.post('/login', isUserGuard, async (req, res) => {
   const { email, password } = req.body;
-  const user = await login(email, password);
-  res.cookie('auth', user, { maxAge: 2 * 60 * 60 * 1000 });
-  res.redirect('/');
+  try {
+    const user = await login(email, password);
+    res.cookie('auth', user, { maxAge: 2 * 60 * 60 * 1000 });
+    res.redirect('/');
+  } catch (error) {
+    res.render('user/login', { email, err: error.message });
+  }
 });
 router.get('/logout', (req, res) => {
   res.clearCookie('auth');

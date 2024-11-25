@@ -54,8 +54,6 @@ router.post('/:movieId/edit', isGuestGuard, async (req, res) => {
     await updateById(movieId, newData);
     res.redirect(`/movies/${movieId}/details`);
   } catch (error) {
-    console.log(error.message);
-
     res.render('movie/edit', { ...newData, err: error.message });
   }
 });
