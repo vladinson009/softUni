@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { create, getById } from '../services/movieService.js';
+import { create, getById, updateById } from '../services/movieService.js';
 import { isGuestGuard } from '../middlewares/authMiddleware.js';
 export const router = Router();
 router.get('/create', isGuestGuard, (req, res) => {
@@ -43,10 +43,19 @@ router.get('/:movieId/details', async (req, res) => {
 });
 router.get('/:movieId/edit', isGuestGuard, async (req, res) => {
   const movieId = req.params.movieId;
-  const movie = await getById(movieId);
+  const movie = await getById(movieId).lean();
 
-  res.render('movie/edit', movie);
+  res.render('movie/edit', { ...movie });
 });
-router.post('/:movie/:movieId/edit', isGuestGuard, async (req, res) => {
+router.post('/:movieId/edit', isGuestGuard, async (req, res) => {
   const movieId = req.params.movieId;
+  const newData = req.body;
+  try {
+    await updateById(movieId, newData);
+    res.redirect(`/movies/${movieId}/details`);
+  } catch (error) {
+    console.log(error.message);
+
+    res.render('movie/edit', { ...newData, err: error.message });
+  }
 });

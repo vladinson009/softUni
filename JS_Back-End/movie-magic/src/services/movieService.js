@@ -9,15 +9,19 @@ export function getById(movieId) {
   return Movie.findOne({ _id: movieId });
 }
 export function updateById(movieId, newData) {
-  return Movie.findByIdAndUpdate(movieId, newData);
+  return Movie.findByIdAndUpdate(movieId, newData, { runValidators: true });
 }
 export function attachCast(movieId, castId, nameInMovie) {
-  return Movie.findByIdAndUpdate(movieId, {
-    $push: {
-      cast: {
-        nameInMovie,
-        cast: castId,
+  return Movie.findByIdAndUpdate(
+    movieId,
+    {
+      $push: {
+        cast: {
+          nameInMovie,
+          cast: castId,
+        },
       },
     },
-  });
+    { runValidators: true }
+  );
 }
