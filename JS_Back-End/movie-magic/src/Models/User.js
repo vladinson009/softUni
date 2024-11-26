@@ -1,11 +1,17 @@
 import { Schema, model } from 'mongoose';
 import bcrypt from 'bcrypt';
+import { validate } from 'express-validation';
 const userSchema = new Schema({
   email: {
     type: String,
     required: [true, 'Email is required!'],
+    minLength: [10, 'Email must be at least 10 characters'],
     unique: true,
     trim: true,
+    validate: {
+      validator: (value) => /@[A-Za-z0-9]+.[A-Za-z0-9]+$/.test(value),
+      message: (props) => `${props.value} is not a valid email!`,
+    },
   },
   password: {
     type: String,

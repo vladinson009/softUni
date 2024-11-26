@@ -19,11 +19,11 @@ export async function login(email, password) {
 
     return token;
   } catch (error) {
-    throw new Error('Email or password does not match!');
+    throw error;
   }
 }
 
-export function register(email, password, repass) {
+export async function register(email, password, repass) {
   try {
     if (!email || !password) {
       throw new Error('All fields are required!');
@@ -34,6 +34,14 @@ export function register(email, password, repass) {
     if (password.length < 6) {
       throw new Error('Password must be at least 6 characters!');
     }
+    if (email.length < 10) {
+      throw new Error('Email must be at least 6 characters!');
+    }
+    const isExist = await User.countDocuments({ email });
+    if (isExist > 0) {
+      throw new Error('Email already exist!');
+    }
+
     return User.create({ email, password });
   } catch (error) {
     throw error;

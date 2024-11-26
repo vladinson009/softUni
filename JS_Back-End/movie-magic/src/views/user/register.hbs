@@ -8,13 +8,13 @@
     </div>
     <form method="POST" class="registerForm">
       <h2>Register</h2>
-      {{#if err}}
-      <p class='formError'>{{err}}</p>
+      {{#if reg.err}}
+      <p class='formError'>{{reg.err}}</p>
       {{/if}}
       <ul class="noBullet">
         <li>
           <label for="email">Email:</label>
-          <input type="text" class="inputFields" id="email" name="email" value="{{email}}" />
+          <input type="text" class="inputFields" id="email" name="email" value="{{reg.email}}" />
         </li>
         <li>
           <label for="password">Password:</label>
