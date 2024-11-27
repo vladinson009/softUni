@@ -19,6 +19,7 @@ const userSchema = new Schema({
     min: 6,
     validate: {
       validator: (value) => /[A-Za-z0-9 ]+/.test(value),
+      message: 'The password contains not allowed characters!',
     },
   },
 });

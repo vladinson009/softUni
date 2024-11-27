@@ -18,14 +18,13 @@ router.post('/register', isUserGuard, async (req, res) => {
       expiresIn: '2h',
     });
     if (user) {
-      res.locals.email = email;
       res.cookie('auth', token, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000 });
       res.redirect('/');
     }
   } catch (error) {
     const err = parseError(error);
 
-    return res.render('user/register', { reg: { email, err } });
+    return res.render('user/register', { email, err });
   }
 });
 router.get('/login', isUserGuard, (req, res) => {
@@ -39,7 +38,7 @@ router.post('/login', isUserGuard, async (req, res) => {
     res.redirect('/');
   } catch (error) {
     const err = parseError(error);
-    res.render('user/login', { login: { email, err } });
+    res.render('user/login', { email, err });
   }
 });
 router.get('/logout', (req, res) => {

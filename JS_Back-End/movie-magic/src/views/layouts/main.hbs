@@ -21,7 +21,7 @@
         <li><a href='/about'>About</a></li>
         <li><a href='/search'>Search</a></li>
         <!--Users-->
-        {{#if email}}
+        {{#if navEmail}}
         <li><a href='/movies/create'>Create Post</a></li>
         <li><a href="/cast/create">Create Cast</a></li>
         <li><a href="/users/logout">Logout</a></li>
@@ -31,7 +31,7 @@
         <li><a href="/users/register">Register</a></li>
         {{/if}}
       </ul>
-      <em>{{email}}</em>
+      <em>{{navEmail}}</em>
     </nav>
     <main>
       {{{body}}}

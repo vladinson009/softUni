@@ -6,13 +6,13 @@
         </div>
         <form method="POST" class="loginForm">
             <h2>Login</h2>
-            {{#if login.err}}
-            <p class='formError'>{{login.err}}</p>
+            {{#if err}}
+            <p class='formError'>{{err}}</p>
             {{/if}}
             <ul class="noBullet">
                 <li>
                     <label for="email">Email:</label>
-                    <input type="text" class="inputFields" id="email" name="email" value="{{login.email}}" />
+                    <input type="text" class="inputFields" id="email" name="email" value="{{email}}" />
                 </li>
                 <li>
                     <label for="password">Password:</label>
