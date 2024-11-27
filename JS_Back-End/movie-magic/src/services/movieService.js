@@ -25,3 +25,6 @@ export function attachCast(movieId, castId, nameInMovie) {
     { runValidators: true }
   );
 }
+export function deleteById(movieId) {
+  return Movie.findByIdAndDelete(movieId);
+}
