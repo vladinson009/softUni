@@ -11,7 +11,6 @@ router.get('/search', async (req, res) => {
 
   res.render('home', { isSearch: true, movies });
 });
-
 router.get('/search/movies', async (req, res) => {
   const values = req.query;
   values.year = Number(values.year);

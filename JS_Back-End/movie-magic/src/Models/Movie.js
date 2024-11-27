@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-import { urlValidator, inputValidation } from '../configs/modelVerification.js';
+import { urlValidator, inputValidation } from '../util/modelVerification.js';
 const currentYear = new Date().getFullYear();
 
 // Define the schema
