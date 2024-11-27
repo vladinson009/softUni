@@ -5,24 +5,19 @@ export async function login(email, password) {
   try {
     const user = await User.findOne({ email });
     const isValid = await bcrypt.compare(password, user.password);
-
     if (!user || !isValid) {
       throw new Error('Email or password does not match!');
     }
-
     const payload = {
       _id: user._id,
       email,
     };
-
     const token = await jwt.sign(payload, process.env.SECRET, { expiresIn: '2h' });
-
     return token;
   } catch (error) {
     throw error;
   }
 }
-
 export async function register(email, password, repass) {
   try {
     if (!email || !password) {
@@ -42,7 +37,7 @@ export async function register(email, password, repass) {
       throw new Error('Email already exist!');
     }
 
-    return User.create({ email, password });
+    return User.create({ email, password, repass });
   } catch (error) {
     throw error;
   }

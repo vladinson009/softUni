@@ -1,6 +1,5 @@
 import { Schema, model } from 'mongoose';
 import bcrypt from 'bcrypt';
-import { validate } from 'express-validation';
 const userSchema = new Schema({
   email: {
     type: String,
@@ -18,9 +17,16 @@ const userSchema = new Schema({
     required: true,
     trim: true,
     min: 6,
+    validate: {
+      validator: (value) => /[A-Za-z0-9 ]+/.test(value),
+    },
   },
 });
-
+userSchema.virtual('repass').set(function (value) {
+  if (this.password != value) {
+    throw new Error("Password don't match!");
+  }
+});
 userSchema.pre('save', async function () {
   const hash = await bcrypt.hash(this.password, 11);
   this.password = hash;
