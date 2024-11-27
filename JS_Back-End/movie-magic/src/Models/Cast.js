@@ -1,11 +1,25 @@
 import { Schema, model } from 'mongoose';
-import { urlValidator } from '../configs/modelUrlVerification.js';
-const currentYear = new Date().getFullYear();
+import { urlValidator, inputValidation } from '../configs/modelVerification.js';
 // Define the schema
 const castSchema = new Schema({
-  name: { type: String, required: [true, 'Name is required!'] },
-  age: { type: Number, required: [true, 'aame is required!'], min: 18, max: 67 },
-  born: { type: String, required: [true, 'Born is required!'] },
+  name: {
+    type: String,
+    required: [true, 'Name is required!'],
+    minLength: [5, 'Name must be at least 5 characters!'],
+    validate: inputValidation,
+  },
+  age: {
+    type: Number,
+    required: [true, 'Age is required!'],
+    min: [1, 'Minimum age is 1'],
+    max: [120, 'Maximum age is 120'],
+  },
+  born: {
+    type: String,
+    required: [true, 'Born is required!'],
+    minLength: [10, 'Born must be at least 10 characters!'],
+    validate: inputValidation,
+  },
   imageUrl: {
     type: String,
     required: [true, 'Image is required!'],
