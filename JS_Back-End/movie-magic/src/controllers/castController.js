@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { createCast, getCastWithout } from '../services/castService.js';
 import { attachCast, getById } from '../services/movieService.js';
+import { parseError } from '../util/errorParser.js';
 export const router = Router();
 
 router.get('/create', (req, res) => {
@@ -11,9 +12,9 @@ router.post('/create', async (req, res) => {
   try {
     await createCast(body);
   } catch (error) {
-    console.log(error);
+    const err = parseError(error);
 
-    res.render('cast/cast-create', { body, err: error.message });
+    res.render('cast/cast-create', { body, err });
     return;
   }
   res.redirect('/');
@@ -28,6 +29,18 @@ router.get('/:movieId/attach', async (req, res) => {
 router.post('/:movieId/attach', async (req, res) => {
   const movieId = req.params.movieId;
   const { nameInMovie, cast } = req.body;
-  await attachCast(movieId, cast, nameInMovie);
-  res.redirect(`/movies/${movieId}/details`);
+  try {
+    console.log(cast);
+
+    if (!cast) {
+      throw new Error('Please select a cast!');
+    }
+    await attachCast(movieId, cast, nameInMovie);
+    res.redirect(`/movies/${movieId}/details`);
+  } catch (error) {
+    const movie = await getById(movieId).lean();
+    const cast = await getCastWithout(movie.cast).lean();
+    const err = parseError(error);
+    return res.render('cast/cast-attach', { movie, cast, err, nameInMovie });
+  }
 });
