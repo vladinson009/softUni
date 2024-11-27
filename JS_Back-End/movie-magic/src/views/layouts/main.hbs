@@ -9,6 +9,11 @@
 
 <body>
   <div id='box'>
+    {{#if err}}
+    <div class="error-container">
+      <p>{{err}}</p>
+    </div>
+    {{/if}}
     <nav>
       <img src='/public/img/logo.webp' alt='logo' />
       <ul class='menu'>

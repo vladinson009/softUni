@@ -5,8 +5,9 @@
             <h2>{{movie.title}}</h2>
             <img class="movie" src="{{movie.imageUrl}}">
             <form method="POST">
+                {{#if err}}<p class='formError'>{{err}}</p>{{/if}}
                 <label for="nameInMovie">Name in movie</label>
-                <input id="nameInMovie" type="text" name="nameInMovie">
+                <input id="nameInMovie" type="text" name="nameInMovie" value="{{nameInMovie}}">
                 <label for="cast">Cast</label>
                 <select id="cast" name="cast">
                     <option value="" selected disabled>--------</option>
