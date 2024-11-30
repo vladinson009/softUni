@@ -12,18 +12,19 @@ router.get('/search', async (req, res) => {
   res.render('home', { isSearch: true, movies });
 });
 router.get('/search/movies', async (req, res) => {
+  let moviesQuery = getAll();
   const values = req.query;
   values.year = Number(values.year);
-  const filter = {};
 
   if (values.title) {
-    filter.title = { $regex: values.title, $options: 'i' };
+    moviesQuery.find({ title: { $regex: values.title, $options: 'i' } });
   }
   if (values.genre) {
-    filter.genre = { $regex: values.genre, $options: 'i' };
+    moviesQuery.find({ genre: { $regex: values.genre, $options: 'i' } });
   }
-  //TODO: search by year filter
-  const movies = await getAll(filter).lean();
-
+  if (values.year) {
+    moviesQuery.find({ year: values.year });
+  }
+  const movies = await moviesQuery.lean();
   res.render('home', { isSearch: true, movies, values });
 });
