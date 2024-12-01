@@ -1,5 +1,6 @@
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
+import { errorParser } from '../utils/errorParser.js';
 
 async function register(username, email, password, repass) {
   if (!username || !email || !password || !repass) {
@@ -12,22 +13,20 @@ async function register(username, email, password, repass) {
     const hash = await bcrypt.hash(password, 11);
     return User.create({ username, email, password: hash });
   } catch (error) {
-    throw error;
+    const err = errorParser(error);
+    throw err;
   }
 }
 async function login(username, password) {
   if (!username || !password) {
     throw new Error('All fields are required!');
   }
-  const user = await User.findOne({ username });
-  if (user == null) {
+  try {
+    const user = await User.findOne({ username });
+    await bcrypt.compare(password, user.password);
+    return user;
+  } catch (error) {
     throw new Error('Invalid username or password!');
   }
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
-    throw new Error('Invalid username or password!');
-  }
-  return user;
 }
-
 export default { login, register };
