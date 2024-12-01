@@ -3,6 +3,15 @@ import bcrypt from 'bcrypt';
 import { errorParser } from '../utils/errorParser.js';
 
 async function register(username, email, password, repass) {
+  try {
+    const user = await User.findOne({ $or: [{ email }, { username }] });
+    if (user) {
+      throw new Error('User with this username or password already exist!');
+    }
+  } catch (error) {
+    const err = errorParser(error);
+    throw err;
+  }
   if (!username || !email || !password || !repass) {
     throw new Error('All fields are required!');
   }

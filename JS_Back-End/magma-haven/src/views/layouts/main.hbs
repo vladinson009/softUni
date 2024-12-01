@@ -17,10 +17,14 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/volcanoes/search">Search</a></li>
                 <li><a href="/volcanoes/catalog">All Volcanoes</a></li>
+                {{#if isAuthenticated}}
                 <li><a href="/volcanoes/create">Create Volcano Wiki</a></li>
+                <li><a href="/user/logout">Logout</a></li>
+                <em>{{user.email}}</em>
+                {{else}}
                 <li><a href="/user/login">Login</a></li>
                 <li><a href="/user/register">Register</a></li>
-                <li><a href="/user/logout">Logout</a></li>
+                {{/if}}
             </ul>
         </nav>
     </header>
@@ -29,7 +33,7 @@
         {{#if error}}
         <div>
             <div class="errorContainer">
-                <p>error</p>
+                <p>{{error}}</p>
             </div>
         </div>
         {{/if}}

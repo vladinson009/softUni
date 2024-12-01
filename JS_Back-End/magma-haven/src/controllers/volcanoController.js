@@ -1,5 +1,5 @@
 import { Router } from 'express';
-
+import { loggedOnly } from '../middlewares/guardsMiddleware.js';
 const volcanoController = Router();
 
 volcanoController.get('/catalog', (req, res) => {
@@ -7,7 +7,7 @@ volcanoController.get('/catalog', (req, res) => {
 });
 // POST
 
-volcanoController.get('/create', (req, res) => {
+volcanoController.get('/create', loggedOnly, (req, res) => {
   res.render('volcano/create');
 });
 // POST
