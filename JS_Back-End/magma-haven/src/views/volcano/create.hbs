@@ -1,28 +1,27 @@
 <section id="create-container">
     <div class="create-container-info">
         <h1>Create Volcano Wiki</h1>
-        <form action="#" method="">
+        <form method="POST">
             <label>Name:</label>
-            <input type="text" id="name" name="" placeholder="...">
+            <input type="text" id="name" name="name" placeholder="..." value="{{volcanoData.name}}">
             <label>Location:</label>
-            <input type="text" id="location" name="" placeholder="...">
+            <input type="text" id="location" name="location" placeholder="..." value="{{volcanoData.name}}">
             <label>Elevation:</label>
-            <input type="number" id="elevations" name="" placeholder="...">
+            <input type="number" id="elevations" name="elevation" placeholder="..." value="{{volcanoData.elevation}}">
             <label>Year of Last Eruption:</label>
-            <input type="number" id="last-year-eruption" name="" placeholder="...">
+            <input type="number" id="last-year-eruption" name="lastEruption" placeholder="..."
+                value="{{volcanoData.lastEruption}}">
             <label>Image:</label>
-            <input type="text" id="image" name="" placeholder="http://...">
+            <input type="text" id="image" name="image" placeholder="http://..." value="{{volcanoData.image}}">
             <label>Volcano Type:</label>
-            <select id="type" name="">
-                <option value="Supervolcanoes">Supervolcanoes</option>
-                <option value="Submarine">Submarine</option>
-                <option value="Subglacial">Subglacial</option>
-                <option value="Mud">Mud</option>
-                <option value="Stratovolcanoes">Stratovolcanoes</option>
-                <option value="Shield">Shield</option>
+            <select id="type" name="typeVolcano">
+                {{#each options}}
+                <option value="{{value}}" {{#if selected}}selected{{/if}}>{{value}}</option>
+                {{/each}}
+
             </select>
             <label>Description:</label>
-            <textarea id="description" name="" placeholder="..."></textarea>
+            <textarea id="description" name="description" placeholder="...">{{volcanoData.description}}</textarea>
             <input type="submit" id="btn" value="Submit"></input>
         </form>
     </div>

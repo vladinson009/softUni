@@ -41,3 +41,5 @@ const volcanoSchema = Schema({
     required: true,
   },
 });
+
+export default model('Volcano', volcanoSchema);

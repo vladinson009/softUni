@@ -20,5 +20,5 @@ function validationError(error) {
   return Object.values(error.errors).at(0).properties.message;
 }
 function mongoError(error) {
-  console.log(error);
+  return error;
 }
