@@ -14,25 +14,25 @@
         <nav>
             <img src="/static/images/logo.avif" class="logo">
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Search</a></li>
-                <li><a href="#">All Volcanoes</a></li>
-                <li><a href="#">Create Volcano Wiki</a></li>
-                <li><a href="#">Login</a></li>
-                <li><a href="#">Register</a></li>
-                <li><a href="#">Logout</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/volcanoes/search">Search</a></li>
+                <li><a href="/volcanoes/catalog">All Volcanoes</a></li>
+                <li><a href="/volcanoes/create">Create Volcano Wiki</a></li>
+                <li><a href="/user/login">Login</a></li>
+                <li><a href="/user/register">Register</a></li>
+                <li><a href="/user/logout">Logout</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <!-- In case of error, you should display div with class "errorContainer" -->
-        <!-- You can choose to display the first error or all of them (error message/s in your opinion) -->
-        <!-- <div>
+        {{#if error}}
+        <div>
             <div class="errorContainer">
-                <p>Error</p>
+                <p>error</p>
             </div>
-        </div> -->
+        </div>
+        {{/if}}
         {{{body}}}
     </main>
 
