@@ -9,7 +9,6 @@ export default function expressConfig(app) {
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
   app.use(pageTitle);
-  //
   app.use(isValidCookie);
   app.use(router);
 }
