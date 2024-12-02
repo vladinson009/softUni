@@ -12,7 +12,7 @@ function create(volcano, owner) {
 function getAll() {
   return Volcano.find();
 }
-function getOne(volcanoId) {
+function getById(volcanoId) {
   return Volcano.findById(volcanoId);
 }
 function updateById(volcanoId, data) {
@@ -29,4 +29,16 @@ function updateById(volcanoId, data) {
 function deleteById(volcanoId) {
   return Volcano.findByIdAndDelete(volcanoId);
 }
-export default { create, getAll, getOne, updateById, deleteById };
+function voteById(volcanoId, userId) {
+  return Volcano.findByIdAndUpdate(volcanoId, {
+    $addToSet: { voteList: userId },
+  });
+}
+export default {
+  create,
+  getAll,
+  getById,
+  updateById,
+  deleteById,
+  voteById,
+};
