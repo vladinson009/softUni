@@ -26,12 +26,12 @@ async function register(username, email, password, repass) {
     throw err;
   }
 }
-async function login(username, password) {
-  if (!username || !password) {
+async function login(email, password) {
+  if (!email || !password) {
     throw new Error('All fields are required!');
   }
   try {
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ email });
     await bcrypt.compare(password, user.password);
     return user;
   } catch (error) {

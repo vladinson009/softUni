@@ -8,5 +8,5 @@ export function createToken(user, res) {
     email: user.email,
   };
   const token = jsonwebtoken.sign(payload, JWT_SIGNATURE, { expiresIn: '2h' });
-  res.cookie('auth', token);
+  res.cookie('auth', token, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000 });
 }

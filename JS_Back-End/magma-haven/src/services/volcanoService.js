@@ -1,12 +1,18 @@
 import Volcano from '../models/Volcano.js';
 
-function create(volcano) {
+function create(volcano, owner) {
   Object.values(volcano).forEach((el) => {
     if (!el) {
       throw new Error('All fields are required!');
     }
   });
 
-  return Volcano.create(volcano);
+  return Volcano.create({ ...volcano, owner });
 }
-export default { create };
+function getAll() {
+  return Volcano.find();
+}
+function getOne(volcanoId) {
+  return Volcano.findById(volcanoId);
+}
+export default { create, getAll, getOne };
