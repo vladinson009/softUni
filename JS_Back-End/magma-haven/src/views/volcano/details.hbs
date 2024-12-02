@@ -23,9 +23,9 @@
             </div>
             {{else}}
             {{#if isVoted}}
-            <a href="volcanoes/vote/{{volcano._id}}" class="btn-vote">Vote</a>
-            {{else}}
             <p class="vote-message">You've already voted for this volcano!</p>
+            {{else}}
+            <a href="/volcanoes/vote/{{volcano._id}}" class="btn-vote">Vote</a>
             {{/if}}
             {{/if}}
         </div>
