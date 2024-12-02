@@ -26,4 +26,7 @@ function updateById(volcanoId, data) {
   });
   return Volcano.findByIdAndUpdate(volcanoId, data, { runValidators: true });
 }
-export default { create, getAll, getOne, updateById };
+function deleteById(volcanoId) {
+  return Volcano.findByIdAndDelete(volcanoId);
+}
+export default { create, getAll, getOne, updateById, deleteById };
