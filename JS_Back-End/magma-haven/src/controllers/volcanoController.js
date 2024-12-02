@@ -3,6 +3,7 @@ import { loggedOnly } from '../middlewares/guardsMiddleware.js';
 import volcanoService from '../services/volcanoService.js';
 import { errorParser } from '../utils/errorParser.js';
 import parseOpt from '../utils/volcanoOptParser.js';
+import { isValidObjectId } from 'mongoose';
 const volcanoController = Router();
 const opt = ['Supervolcanoes', 'Submarine', 'Subglacial', 'Mud', 'Stratovolcanoes', 'Shield'];
 
@@ -47,10 +48,21 @@ volcanoController.get('/details/:volcanoId', async (req, res) => {
     res.render('volcano/catalog', { error });
   }
 });
-// POST
-volcanoController.get('/edit/:volcanoId', (req, res) => {
+volcanoController.get('/edit/:volcanoId', async (req, res) => {
   const volcanoId = req.params.volcanoId;
-  res.render('volcano/edit');
+  const userId = res.locals.user?._id;
+  try {
+    const volcano = await volcanoService.getOne(volcanoId).lean();
+    const isAuthor = userId == volcano.owner.toString();
+    if (!isAuthor) {
+      return res.redirect('/');
+    }
+    const options = parseOpt(opt, volcano.typeVolcano);
+
+    res.render('volcano/edit', { volcano, options });
+  } catch (err) {
+    return res.redirect('/404');
+  }
 });
 // POST
 volcanoController.get('/search', (req, res) => {
