@@ -64,7 +64,18 @@ volcanoController.get('/edit/:volcanoId', async (req, res) => {
     return res.redirect('/404');
   }
 });
-// POST
+volcanoController.post('/edit/:volcanoId', async (req, res) => {
+  const data = req.body;
+  const volcanoId = req.params.volcanoId;
+  try {
+    await volcanoService.updateById(volcanoId, data);
+    res.redirect('/volcanoes/details/' + volcanoId);
+  } catch (err) {
+    const error = errorParser(err);
+    const options = parseOpt(opt, data.typeVolcano);
+    res.render('volcano/edit', { volcano: data, options, error });
+  }
+});
 volcanoController.get('/search', (req, res) => {
   res.render('volcano/search');
 });

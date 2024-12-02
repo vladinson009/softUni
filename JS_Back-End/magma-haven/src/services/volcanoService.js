@@ -15,4 +15,15 @@ function getAll() {
 function getOne(volcanoId) {
   return Volcano.findById(volcanoId);
 }
-export default { create, getAll, getOne };
+function updateById(volcanoId, data) {
+  if (!volcanoId) {
+    throw new Error('Could not find the volcano in our database...');
+  }
+  Object.values(data).forEach((field) => {
+    if (!field) {
+      throw new Error('All fields are required!');
+    }
+  });
+  return Volcano.findByIdAndUpdate(volcanoId, data, { runValidators: true });
+}
+export default { create, getAll, getOne, updateById };
