@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import userService from '../services/userService.js';
-import jwt from '../libs/jwt.js';
-import { JWT_SECRET } from '../constants.js';
+import createToken from '../utils/createToken.js';
 const userController = Router();
 
 userController.get('/register', async (req, res) => {
@@ -11,12 +10,7 @@ userController.post('/register', async (req, res) => {
   const { username, email, password, repass } = req.body;
   try {
     const user = await userService.register(email, username, password, repass);
-    const payload = {
-      _id: user._id,
-      email: user.email,
-      username: user.username,
-    };
-    const token = await jwt.sign(payload, JWT_SECRET, { expiresIn: '2h' }); // set valid token for 2 hours
+    const token = await createToken(user);
     res.cookie('auth', token, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000 }); //set cookie valid for 2 hours
     res.redirect('/');
   } catch (error) {
@@ -26,8 +20,16 @@ userController.post('/register', async (req, res) => {
 userController.get('/login', (req, res) => {
   res.render('user/login');
 });
-userController.post('/login', (req, res) => {
+userController.post('/login', async (req, res) => {
   const { email, password } = req.body;
+  try {
+    const user = await userService.login(email, password);
+    const token = await createToken(user);
+    res.cookie('auth', token, { httpOnly: true, maxAge: 2 * 60 * 60 * 1000 });
+    res.redirect('/');
+  } catch (error) {
+    res.render('user/login', { email, error });
+  }
 });
 
 export default userController;

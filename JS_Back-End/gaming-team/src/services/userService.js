@@ -26,5 +26,16 @@ async function register(email, username, password, repass) {
     throw error;
   }
 }
-
-export default { register };
+async function login(email, password) {
+  if (!email.trim() || !password.trim()) {
+    throw new Error('All fields are required!');
+  }
+  try {
+    const user = await User.findOne({ email });
+    await bcrypt.compare(password, user.password);
+    return user;
+  } catch (error) {
+    throw new Error('Invalid email or password!');
+  }
+}
+export default { register, login };
