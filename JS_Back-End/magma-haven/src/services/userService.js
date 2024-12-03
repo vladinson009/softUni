@@ -3,6 +3,12 @@ import bcrypt from 'bcrypt';
 import { errorParser } from '../utils/errorParser.js';
 
 async function register(username, email, password, repass) {
+  if (!username || !email || !password || !repass) {
+    throw new Error('All fields are required!');
+  }
+  if (password != repass) {
+    throw new Error('Passwords does not match!');
+  }
   try {
     const user = await User.findOne({ $or: [{ email }, { username }] });
     if (user) {
@@ -11,12 +17,6 @@ async function register(username, email, password, repass) {
   } catch (error) {
     const err = errorParser(error);
     throw err;
-  }
-  if (!username || !email || !password || !repass) {
-    throw new Error('All fields are required!');
-  }
-  if (password != repass) {
-    throw new Error('Passwords does not match!');
   }
   try {
     const hash = await bcrypt.hash(password, 11);
