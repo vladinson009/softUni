@@ -26,16 +26,23 @@ async function register(email, username, password, repass) {
     throw error;
   }
 }
+
 async function login(email, password) {
   if (!email.trim() || !password.trim()) {
     throw new Error('All fields are required!');
   }
   try {
     const user = await User.findOne({ email });
-    await bcrypt.compare(password, user.password);
+    if (!user) {
+      throw new Error('Invalid email or password!');
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      throw new Error('Invalid email or password!');
+    }
     return user;
   } catch (error) {
-    throw new Error('Invalid email or password!');
+    throw error;
   }
 }
 export default { register, login };
