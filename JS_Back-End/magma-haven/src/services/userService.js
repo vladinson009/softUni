@@ -32,7 +32,13 @@ async function login(email, password) {
   }
   try {
     const user = await User.findOne({ email });
-    await bcrypt.compare(password, user.password);
+    if (!user) {
+      throw new Error('Invalid username or password!');
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      throw new Error('Invalid username or password!');
+    }
     return user;
   } catch (error) {
     throw new Error('Invalid username or password!');
