@@ -37,3 +37,4 @@ const gameSchema = Schema({
     required: true,
   },
 });
+export default model('Game', gameSchema);
