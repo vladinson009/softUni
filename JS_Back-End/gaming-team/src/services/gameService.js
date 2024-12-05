@@ -18,5 +18,18 @@ function create(data, owner) {
 function getAll() {
   return Game.find();
 }
-
-export default { create, getAll };
+function getById(gameId) {
+  return Game.findById(gameId);
+}
+function updateById(gameId, data) {
+  Object.entries(data).forEach(([key, value]) => {
+    if (!value.trim()) {
+      throw new Error(`${key} field is required!`);
+    }
+  });
+  return Game.findByIdAndUpdate(gameId, data);
+}
+function deleteById(gameId) {
+  return Game.findByIdAndDelete(gameId);
+}
+export default { create, getAll, getById, updateById, deleteById };

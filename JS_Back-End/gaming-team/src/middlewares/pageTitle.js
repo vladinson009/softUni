@@ -11,6 +11,12 @@ export default function pageTitle(req, res, next) {
 
   if (title != undefined) {
     res.locals.pageTitle = title;
+  } else if (req.url.includes('/games/details/')) {
+    res.locals.pageTitle = 'Details Page';
+  } else if (req.url.includes('/games/edit/')) {
+    res.locals.pageTitle = 'Edit Page - Gaming Team';
+  } else {
+    res.locals.pageTitle = '404 Page - Gaming Team';
   }
   next();
 }
