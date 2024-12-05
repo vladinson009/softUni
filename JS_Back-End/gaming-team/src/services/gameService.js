@@ -1,6 +1,8 @@
 import Game from '../models/Game.js';
 const platforms = ['PC', 'Nintendo', 'PS4', 'PS5', 'XBOX'];
+// Game model service
 
+//Create new game
 function create(data, owner) {
   if (platforms.indexOf(data.platform) < 0) {
     throw new Error('Please select a valid platform!');
@@ -15,12 +17,15 @@ function create(data, owner) {
   }
   return Game.create({ ...data, owner });
 }
+//Get all games
 function getAll() {
   return Game.find();
 }
+//Get one game by id
 function getById(gameId) {
   return Game.findById(gameId);
 }
+//Update one game by id
 function updateById(gameId, data) {
   Object.entries(data).forEach(([key, value]) => {
     if (!value.trim()) {
@@ -29,9 +34,11 @@ function updateById(gameId, data) {
   });
   return Game.findByIdAndUpdate(gameId, data, { runValidators: true });
 }
+//Delete one game by id
 function deleteById(gameId) {
   return Game.findByIdAndDelete(gameId);
 }
+//Get games by two criteria
 function searchCriteria(nameValue, platformValue) {
   return Game.find({
     name: {
@@ -44,6 +51,7 @@ function searchCriteria(nameValue, platformValue) {
     },
   });
 }
+//Push to the array a new buyer of the game
 function boughtBy(gameId, boughtBy) {
   if (!boughtBy) {
     throw new Error('User is not authenticated!');

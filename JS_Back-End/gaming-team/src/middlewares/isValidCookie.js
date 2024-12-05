@@ -1,6 +1,6 @@
 import { JWT_SECRET } from '../constants.js';
 import jwt from '../libs/jwt.js';
-
+// Check for valid cookie
 export default async function isValidCookie(req, res, next) {
   if (req.cookies['auth']) {
     const token = req.cookies['auth'];

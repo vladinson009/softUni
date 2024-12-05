@@ -7,10 +7,9 @@ const titles = {
   '/search': 'Search - Gaming Team',
   '/search/criteria': 'Search - Gaming Team',
 };
-
+// Dynamic page title
 export default function pageTitle(req, res, next) {
   const title = titles[req.url];
-
   if (title != undefined) {
     res.locals.pageTitle = title;
   } else if (req.url.includes('/games/details/')) {

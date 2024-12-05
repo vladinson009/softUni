@@ -1,5 +1,5 @@
 import { Schema, model, Types } from 'mongoose';
-
+// Model for Game schema
 const gameSchema = Schema({
   name: {
     type: String,

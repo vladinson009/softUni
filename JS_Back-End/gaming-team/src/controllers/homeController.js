@@ -4,10 +4,11 @@ import gameService from '../services/gameService.js';
 const platforms = ['-------', 'PC', 'Nintendo', 'PS4', 'PS5', 'XBOX'];
 
 const homeController = Router();
-
+// Home controller
 homeController.get('/', (req, res) => {
   res.render('home');
 });
+// Search controller
 homeController.get('/search', async (req, res) => {
   try {
     const options = createSelectOptions(platforms);
@@ -17,6 +18,7 @@ homeController.get('/search', async (req, res) => {
     res.render('/404');
   }
 });
+// Search controller by Criteria
 homeController.get('/search/criteria', async (req, res) => {
   const { name, platform } = req.query;
   try {

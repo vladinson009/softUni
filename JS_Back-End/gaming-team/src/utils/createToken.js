@@ -1,5 +1,7 @@
 import jwt from '../libs/jwt.js';
 import { JWT_SECRET } from '../constants.js';
+
+// Sign json web token
 export default function createToken(user) {
   const payload = {
     _id: user._id,

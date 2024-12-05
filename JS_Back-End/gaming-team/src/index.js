@@ -8,13 +8,16 @@ const app = express();
 
 (async () => {
   try {
+    // Configure MongoDB database
     await mongooseConfig();
     console.log('Successfully connected to Database...');
 
     // Configure Handlebars
     handlebarsConfig(app);
+
     // Configure Express
     expressConfig(app);
+
     // Start Express server
     app.listen(PORT, () => {
       console.log(`Server is listening on port ${PORT}...`);

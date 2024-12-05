@@ -1,5 +1,8 @@
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
+// User model service
+
+//Register new user
 async function register(email, username, password, repass) {
   if (!email.trim() || !username.trim() || !password.trim() || !repass.trim()) {
     throw new Error('All fields are required!');
@@ -26,7 +29,7 @@ async function register(email, username, password, repass) {
     throw error;
   }
 }
-
+//Login existing user
 async function login(email, password) {
   if (!email.trim() || !password.trim()) {
     throw new Error('All fields are required!');
@@ -45,4 +48,5 @@ async function login(email, password) {
     throw error;
   }
 }
+
 export default { register, login };
