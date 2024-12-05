@@ -1,22 +1,6 @@
 import Game from '../models/Game.js';
-const platforms = ['PC', 'Nintendo', 'PS4', 'PS5', 'XBOX'];
+import { validateGameOffer } from '../utils/validateGameOffer.js';
 // Game model service
-
-//Create new game
-function create(data, owner) {
-  if (platforms.indexOf(data.platform) < 0) {
-    throw new Error('Please select a valid platform!');
-  }
-  Object.entries(data).forEach(([key, value]) => {
-    if (!value.trim()) {
-      throw new Error(`${key} field is required!`);
-    }
-  });
-  if (!owner) {
-    throw new Error('Unable to create an unauthenticated offer!');
-  }
-  return Game.create({ ...data, owner });
-}
 //Get all games
 function getAll() {
   return Game.find();
@@ -25,13 +9,17 @@ function getAll() {
 function getById(gameId) {
   return Game.findById(gameId);
 }
+//Create new game
+function create(data, owner) {
+  validateGameOffer(data);
+  if (!owner) {
+    throw new Error('Unable to create an unauthenticated offer!');
+  }
+  return Game.create({ ...data, owner });
+}
 //Update one game by id
 function updateById(gameId, data) {
-  Object.entries(data).forEach(([key, value]) => {
-    if (!value.trim()) {
-      throw new Error(`${key} field is required!`);
-    }
-  });
+  validateGameOffer(data);
   return Game.findByIdAndUpdate(gameId, data, { runValidators: true });
 }
 //Delete one game by id

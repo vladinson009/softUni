@@ -7,8 +7,17 @@ async function register(email, username, password, repass) {
   if (!email.trim() || !username.trim() || !password.trim() || !repass.trim()) {
     throw new Error('All fields are required!');
   }
+  if (username.length < 5) {
+    throw new Error('The username should be at least five characters long.');
+  }
+  if (email.length < 10) {
+    throw new Error('The email should be at least ten character long.');
+  }
+  if (password.length < 4) {
+    throw new Error('The password should be at least four characters long.');
+  }
   if (password.trim() != repass.trim()) {
-    throw new Error('Passwords does not match!');
+    throw new Error('The password confirmation should be equal to the password.');
   }
   try {
     const user = await User.findOne({ $or: [{ email }, { username }] }).lean();
