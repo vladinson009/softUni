@@ -27,9 +27,35 @@ function updateById(gameId, data) {
       throw new Error(`${key} field is required!`);
     }
   });
-  return Game.findByIdAndUpdate(gameId, data);
+  return Game.findByIdAndUpdate(gameId, data, { runValidators: true });
 }
 function deleteById(gameId) {
   return Game.findByIdAndDelete(gameId);
 }
-export default { create, getAll, getById, updateById, deleteById };
+function searchCriteria(nameValue, platformValue) {
+  return Game.find({
+    name: {
+      $regex: nameValue.trim(),
+      $options: 'i',
+    },
+    platform: {
+      $regex: platformValue.trim(),
+      $options: 'i',
+    },
+  });
+}
+function boughtBy(gameId, boughtBy) {
+  if (!boughtBy) {
+    throw new Error('User is not authenticated!');
+  }
+  return Game.findByIdAndUpdate(gameId, { $addToSet: { boughtBy } }, { runValidators: true });
+}
+export default {
+  create,
+  getAll,
+  getById,
+  updateById,
+  deleteById,
+  searchCriteria,
+  boughtBy,
+};

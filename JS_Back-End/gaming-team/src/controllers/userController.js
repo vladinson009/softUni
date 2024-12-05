@@ -2,12 +2,13 @@ import { Router } from 'express';
 import userService from '../services/userService.js';
 import createToken from '../utils/createToken.js';
 import errorParser from '../utils/errorParser.js';
+import { loggedOnly, guestOnly } from '../middlewares/securityGuards.js';
 const userController = Router();
 
-userController.get('/register', async (req, res) => {
+userController.get('/register', guestOnly, async (req, res) => {
   res.render('user/register');
 });
-userController.post('/register', async (req, res) => {
+userController.post('/register', guestOnly, async (req, res) => {
   const { username, email, password, repass } = req.body;
   try {
     const user = await userService.register(email, username, password, repass);
@@ -19,10 +20,10 @@ userController.post('/register', async (req, res) => {
     res.render('user/register', { username, email, error });
   }
 });
-userController.get('/login', (req, res) => {
+userController.get('/login', guestOnly, (req, res) => {
   res.render('user/login');
 });
-userController.post('/login', async (req, res) => {
+userController.post('/login', guestOnly, async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await userService.login(email, password);
@@ -35,7 +36,7 @@ userController.post('/login', async (req, res) => {
     res.render('user/login', { email, error });
   }
 });
-userController.get('/logout', (req, res) => {
+userController.get('/logout', loggedOnly, (req, res) => {
   res.clearCookie('auth');
   res.redirect('/');
 });

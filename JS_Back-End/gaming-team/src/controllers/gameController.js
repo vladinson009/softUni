@@ -2,10 +2,10 @@ import { Router } from 'express';
 import createSelectOptions from '../utils/createSelectOptions.js';
 import errorParser from '../utils/errorParser.js';
 import gameService from '../services/gameService.js';
+import { loggedOnly, guestOnly } from '../middlewares/securityGuards.js';
 const gameController = Router();
 const platforms = ['-------', 'PC', 'Nintendo', 'PS4', 'PS5', 'XBOX'];
-
-// Catalog controller
+// Catalog controller for all user
 gameController.get('/catalog', async (req, res) => {
   try {
     const games = await gameService.getAll().lean();
@@ -14,12 +14,13 @@ gameController.get('/catalog', async (req, res) => {
     res.redirect('/404');
   }
 });
-// Create post controller
-gameController.get('/create', (req, res) => {
+// Create post "GET" controller for logged users only
+gameController.get('/create', loggedOnly, (req, res) => {
   const options = createSelectOptions(platforms, req.body.platform);
   res.render('game/create', { options });
 });
-gameController.post('/create', async (req, res) => {
+// Create post "POST" controller for logged users only
+gameController.post('/create', loggedOnly, async (req, res) => {
   const data = req.body;
   const ownerId = res.locals.user?._id;
   try {
@@ -35,7 +36,6 @@ gameController.post('/create', async (req, res) => {
 gameController.get('/details/:gameId', async (req, res) => {
   const gameId = req.params.gameId;
   const userId = res.locals.user?._id;
-
   try {
     const game = await gameService.getById(gameId).lean();
     const isAuthor = game.owner.toString() == userId;
@@ -46,7 +46,8 @@ gameController.get('/details/:gameId', async (req, res) => {
     res.redirect('/404');
   }
 });
-gameController.get('/edit/:gameId', async (req, res) => {
+// Edit post "GET" controller for logged users only
+gameController.get('/edit/:gameId', loggedOnly, async (req, res) => {
   const gameId = req.params.gameId;
   try {
     const game = await gameService.getById(gameId).lean();
@@ -56,7 +57,8 @@ gameController.get('/edit/:gameId', async (req, res) => {
     res.redirect('/404');
   }
 });
-gameController.post('/edit/:gameId', async (req, res) => {
+// Edit post "POST" controller for logged users only
+gameController.post('/edit/:gameId', loggedOnly, async (req, res) => {
   const gameId = req.params.gameId;
   const game = req.body;
   try {
@@ -68,13 +70,36 @@ gameController.post('/edit/:gameId', async (req, res) => {
     res.render('game/edit', { game, options, error });
   }
 });
-gameController.get('/delete/:gameId', async (req, res) => {
+// Delete post "GET" controller for logged users only
+gameController.get('/delete/:gameId', loggedOnly, async (req, res) => {
   const gameId = req.params.gameId;
   try {
     await gameService.deleteById(gameId);
     res.redirect('/games/catalog');
   } catch (error) {
     res.render('/404');
+  }
+});
+// Buy post "GET" controller for logged users only
+gameController.get('/buy/:gameId', loggedOnly, async (req, res) => {
+  const gameId = req.params.gameId;
+  const userId = res.locals.user?._id;
+  try {
+    const ownerId = (
+      await gameService.getById(gameId).select('owner -_id').lean()
+    ).owner.toString();
+
+    if (userId == ownerId) {
+      return res.redirect('/404');
+    }
+  } catch (error) {
+    throw error;
+  }
+  try {
+    await gameService.boughtBy(gameId, userId);
+    res.redirect('/games/details/' + gameId);
+  } catch (error) {
+    res.redirect('/404');
   }
 });
 export default gameController;

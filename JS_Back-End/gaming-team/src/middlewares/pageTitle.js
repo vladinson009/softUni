@@ -4,6 +4,8 @@ const titles = {
   '/user/login': 'Login Page - Gaming Team',
   '/games/catalog': 'Catalog Page - Gaming Team',
   '/games/create': 'Create Page - Gaming Team',
+  '/search': 'Search - Gaming Team',
+  '/search/criteria': 'Search - Gaming Team',
 };
 
 export default function pageTitle(req, res, next) {
