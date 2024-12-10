@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import userService from '../services/userService.js';
-
+import { isGuest, isLogged } from '../middlewares/guards.js';
 const userController = Router();
 
-userController.post('/register', async (req, res) => {
+userController.post('/register', isGuest, async (req, res) => {
   const userInput = req.body;
   try {
     const user = await userService.register(userInput);
@@ -14,7 +14,7 @@ userController.post('/register', async (req, res) => {
   }
 });
 
-userController.post('/login', async (req, res) => {
+userController.post('/login', isGuest, async (req, res) => {
   const userInput = req.body;
   try {
     const user = await userService.login(userInput);
@@ -25,7 +25,7 @@ userController.post('/login', async (req, res) => {
   }
 });
 
-userController.get('/logout', async (req, res) => {
+userController.get('/logout', isLogged, async (req, res) => {
   res.status(204).json();
 });
 
