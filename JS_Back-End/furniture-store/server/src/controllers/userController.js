@@ -7,21 +7,24 @@ userController.post('/register', async (req, res) => {
   const userInput = req.body;
   try {
     const user = await userService.register(userInput);
+    res.locals.user = user;
     res.json(user);
   } catch (error) {
-    throw error;
+    res.status(401).json({ message: error.message });
   }
 });
+
 userController.post('/login', async (req, res) => {
   const userInput = req.body;
-
   try {
     const user = await userService.login(userInput);
+    res.locals.user = user;
     res.json(user);
   } catch (error) {
-    throw error;
+    res.status(401).json({ message: error.message });
   }
 });
+
 userController.get('/logout', async (req, res) => {
   res.status(204).json();
 });
