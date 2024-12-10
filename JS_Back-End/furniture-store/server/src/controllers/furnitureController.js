@@ -1,17 +1,18 @@
 import { Router } from 'express';
 import furnitureService from '../services/furnitureService.js';
-
+import { isLogged } from '../middlewares/guards.js';
 const furnitureController = Router();
 
 furnitureController.get('/catalog', async (req, res) => {
+  const query = req.query;
   try {
-    const furniture = await furnitureService.getAll();
+    const furniture = await furnitureService.getAll(query);
     res.json(furniture);
   } catch (error) {
     res.status(401).json({ message: error.message });
   }
 });
-furnitureController.post('/catalog', async (req, res) => {
+furnitureController.post('/catalog', isLogged, async (req, res) => {
   const userInput = req.body;
   const ownerId = req.user?._id;
   try {
@@ -30,7 +31,7 @@ furnitureController.get('/catalog/:furnitureId', async (req, res) => {
     res.status(401).json({ message: error.message });
   }
 });
-furnitureController.put('/catalog/:furnitureId', async (req, res) => {
+furnitureController.put('/catalog/:furnitureId', isLogged, async (req, res) => {
   const furnitureId = req.params.furnitureId;
   const userInput = req.body;
   try {
@@ -40,7 +41,7 @@ furnitureController.put('/catalog/:furnitureId', async (req, res) => {
     res.status(401).json({ message: error.message });
   }
 });
-furnitureController.delete('/catalog/:furnitureId', async (req, res) => {
+furnitureController.delete('/catalog/:furnitureId', isLogged, async (req, res) => {
   const furnitureId = req.params.furnitureId;
   try {
     const furniture = await furnitureService.deleteById(furnitureId);
