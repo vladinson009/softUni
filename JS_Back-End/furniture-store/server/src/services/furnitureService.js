@@ -1,7 +1,12 @@
 import Furniture from '../models/Furniture.js';
-
+import querystring from 'querystring';
 function getAll(filter = {}) {
-  return Furniture.find(filter);
+  const furniture = Furniture.find();
+  if (filter.where) {
+    const _ownerId = querystring.parse(filter.where)._ownerId.slice(1, -1);
+    furniture.find({ _ownerId });
+  }
+  return furniture;
 }
 function getById(furnitureId) {
   return Furniture.findById(furnitureId);
