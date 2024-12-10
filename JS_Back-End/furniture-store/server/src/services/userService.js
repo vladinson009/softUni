@@ -45,7 +45,6 @@ async function login(userInput) {
     throw error;
   }
 }
-
 function createToken(user) {
   const payload = {
     email: user.email,
@@ -57,6 +56,3 @@ function createToken(user) {
   return payload;
 }
 export default { register, login };
-// sessionStorage.setItem('email', result.email);
-// sessionStorage.setItem('authToken', result.accessToken);
-// sessionStorage.setItem('userId', result._id);
