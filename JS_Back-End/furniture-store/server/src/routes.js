@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import furnitureController from './controllers/furnitureController.js';
 import userController from './controllers/userController.js';
+import furnitureController from './controllers/furnitureController.js';
 
 const routes = Router();
-routes.use('/data', furnitureController);
 routes.use('/users', userController);
+routes.use('/data', furnitureController);
+
 export default routes;

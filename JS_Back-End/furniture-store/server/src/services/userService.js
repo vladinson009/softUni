@@ -1,59 +1,62 @@
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-async function register(email, password, rePass) {
-  if (!email.trim() || !password.trim()) {
-    throw new Error('All fields are required!');
-  }
-  if (password.trim() != rePass.trim()) {
-    throw new Error('Passwords does not match!');
-  }
-  try {
-    const user = await User.findOne({ email });
-
-    if (user) {
-      throw new Error('User already exist');
+async function register(userInput) {
+  Object.values(userInput).forEach((el) => {
+    if (el.trim() == '') {
+      throw new Error('All fields are required!');
     }
-
-    const createdUser = await User.create({ email, password });
-    return generateSession(createdUser);
-  } catch (error) {
-    throw error.message;
+  });
+  if (userInput.password.trim() != userInput.rePass.trim()) {
+    throw new Error('Password does not match!');
   }
+  try {
+    const isUser = await User.countDocuments({ email: userInput.email });
+    if (isUser > 0) {
+      throw new Error('Email aready exists!');
+    }
+  } catch (error) {
+    throw error;
+  }
+
+  const payload = {
+    email: userInput.email,
+    password: userInput.password,
+  };
+  const user = await User.create(payload);
+  return createToken(user);
 }
-async function login(email, password) {
+async function login(userInput) {
+  const { email, password } = userInput;
   if (!email.trim() || !password.trim()) {
     throw new Error('All fields are required!');
   }
   try {
     const user = await User.findOne({ email });
-    if (!user) {
-      throw new Error('Invalid email or password');
+    if (user == null) {
+      throw new Error('Invalid email or password!');
     }
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      throw new Error('Invalid email or password');
+    if (isMatch == false) {
+      throw new Error('Invalid email or password!');
     }
-    return generateSession(user);
+    return createToken(user);
   } catch (error) {
-    throw error.message;
+    throw error;
   }
 }
-function logout() {}
 
-function generateSession(user) {
+function createToken(user) {
   const payload = {
-    _id: user._id,
     email: user.email,
+    _id: user._id,
   };
 
-  const token = jwt.sign(payload, 'secret', { expiresIn: '2h' });
-
-  return {
-    _id: user._id,
-    email: user.email,
-    accessToken: token,
-  };
+  const accessToken = jwt.sign(payload, 'secret', { expiresIn: '2h' });
+  payload.accessToken = accessToken;
+  return payload;
 }
-
-export default { register, login, logout };
+export default { register, login };
+// sessionStorage.setItem('email', result.email);
+// sessionStorage.setItem('authToken', result.accessToken);
+// sessionStorage.setItem('userId', result._id);

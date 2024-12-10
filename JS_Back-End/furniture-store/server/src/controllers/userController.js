@@ -1,25 +1,29 @@
 import { Router } from 'express';
 import userService from '../services/userService.js';
 
-const usersController = Router();
+const userController = Router();
 
-usersController.post('/register', async (req, res) => {
-  const { email, password, rePass } = req.body;
-
+userController.post('/register', async (req, res) => {
+  const userInput = req.body;
   try {
-    const user = await userService.register(email, password, rePass);
-    res.status(200).json(user);
+    const user = await userService.register(userInput);
+    res.json(user);
   } catch (error) {
-    throw error.message;
+    throw error;
   }
 });
-usersController.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+userController.post('/login', async (req, res) => {
+  const userInput = req.body;
+
   try {
-    const user = await userService.login(email, password);
-    res.status(200).json(user);
+    const user = await userService.login(userInput);
+    res.json(user);
   } catch (error) {
-    throw error.message;
+    throw error;
   }
 });
-export default usersController;
+userController.get('/logout', async (req, res) => {
+  res.status(204).json();
+});
+
+export default userController;
