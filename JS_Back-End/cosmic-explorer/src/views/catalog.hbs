@@ -1,0 +1,11 @@
+{{#each planets}}
+<div class="planet-card" id="{{_id}}">
+  <img src="{{{image}}}" />
+  <h3>{{name}}</h3>
+  <p>Solar System: {{solarSystem}}</p>
+  <a class="detail-btn" href="/planets/details/{{_id}}">Details</a>
+</div>
+
+{{else}}
+<p class="no-post">There are no planets found yet!</p>
+{{/each}}
